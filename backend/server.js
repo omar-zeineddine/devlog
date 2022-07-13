@@ -6,9 +6,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// import routes
+// add routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const categoryRoutes = require("./routes/category");
+const tagRoutes = require("./routes/tag");
 
 // app
 const app = express();
@@ -34,6 +36,8 @@ if (process.env.NODE_ENV === "dev") {
 // routes middleware
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", categoryRoutes);
+app.use("/api/v1", tagRoutes);
 
 // port
 const PORT = process.env.PORT || 5000;
