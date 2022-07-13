@@ -22,4 +22,9 @@ router.post(
   createCategory
 );
 
+router.get("/categories", getCategories);
+// slug instead of id for SEO
+router.get("/category/:slug", getCategory);
+router.delete("/category/:slug", removeCategory);
+
 module.exports = router;
