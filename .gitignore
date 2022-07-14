@@ -8,6 +8,7 @@ backend/.env
 
 # dependencies
 frontend/node_modules
+frontend/.next
 frontend/.pnp
 frontend.pnp.js
 
