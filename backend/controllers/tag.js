@@ -8,6 +8,7 @@ exports.createTag = (req, res) => {
   let slug = slugify(name).toLowerCase();
 
   let tag = new Tag({ name, slug });
+  console.log(tag);
 
   tag.save((err, tagData) => {
     if (err) {

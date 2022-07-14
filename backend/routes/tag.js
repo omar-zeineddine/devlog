@@ -6,12 +6,12 @@ const { createTag, getTags, getTag, removeTag } = require("../controllers/tag");
 
 // validators
 const { runValidation } = require("../validators");
-const { tagCreateValidator } = require("../validators/tag");
+const { createTagValidator } = require("../validators/tag");
 const { requireSignin, adminMiddleWare } = require("../controllers/auth");
 
 router.post(
   "/tag",
-  tagCreateValidator,
+  createTagValidator,
   runValidation,
   requireSignin,
   adminMiddleWare,
