@@ -21,7 +21,7 @@ router.get("/logout", logout);
 // test middleware for logged in user
 router.get("/secret", requireSignin, (req, res) => {
   res.json({
-    user: req.user,
+    user: req.auth,
   });
 });
 
