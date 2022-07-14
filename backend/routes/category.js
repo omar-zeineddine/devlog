@@ -9,13 +9,13 @@ const {
 
 // validators
 const { runValidation } = require("../validators");
-const { categoryCreateValidator } = require("../validators/category");
+const { createCategoryValidator } = require("../validators/category");
 const { requireSignin, adminMiddleWare } = require("../controllers/auth");
 
 // admin only can create a new category
 router.post(
   "/category",
-  categoryCreateValidator,
+  createCategoryValidator,
   runValidation,
   requireSignin,
   adminMiddleWare,
