@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import "./Header.css";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
