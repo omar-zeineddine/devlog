@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { signin } from "../../../actions/auth";
+import { signin, authenticate, isAuthenticated } from "../../../actions/auth";
 import Router from "next/router";
 
 const SigninComponent = () => {
@@ -26,8 +26,15 @@ const SigninComponent = () => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        // redirect to home page on successful login
-        Router.push("/");
+        // authenticate user
+        authenticate(data, () => {
+          if (isAuthenticated() && isAuthenticated.role === 1) {
+            // redirect to admin page
+            Router.push("/admin");
+          } else {
+            Router.push("/user");
+          }
+        });
       }
     });
   };
