@@ -14,7 +14,7 @@ export const preSignup = (user) => {
     .then((res) => {
       return res.json();
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.log(err));
 };
 
 export const signin = (user) => {
@@ -29,7 +29,21 @@ export const signin = (user) => {
     .then((res) => {
       return res.json();
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.log(err));
+};
+
+export const logout = (next) => {
+  removeCookie("token");
+  removeLocalStorage("token");
+  next();
+
+  return fetch(`${API}/logout`, {
+    method: "GET",
+  })
+    .then((res) => {
+      console.log("user logged out");
+    })
+    .catch((err) => console.log(err));
 };
 
 // storing user information before authentication

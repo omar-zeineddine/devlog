@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
+import Router from "next/router";
+import { isAuthenticated, logout } from "../../actions/auth";
 import {
   Collapse,
   Navbar,
@@ -8,7 +10,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import "./Header.css";
+import styles from "./Header.module.scss";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,33 +18,48 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar className={styles.nav} dark expand="sm">
         <Link href="/">
-          <NavLink className="logo">DevLog</NavLink>
+          <NavLink className={styles.logo}>DevLog</NavLink>
         </Link>
-        <NavbarToggler onClick={toggle} />
+        <NavbarToggler className={styles.tog} onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
+            <NavItem className={styles.navitem}>
               <Link href="/blogs">
                 <NavLink>Blogs</NavLink>
               </Link>
             </NavItem>
-            <NavItem>
+            <NavItem className={styles.navitem}>
               <Link href="/about">
                 <NavLink>About</NavLink>
               </Link>
             </NavItem>
-            <NavItem>
-              <Link href="/signin">
-                <NavLink>Signin</NavLink>
-              </Link>
-            </NavItem>
-            <NavItem>
-              <Link href="/signup">
-                <NavLink>Signup</NavLink>
-              </Link>
-            </NavItem>
+            {/* hide signup and sign items when a user is logged in */}
+            {!isAuthenticated() && (
+              <>
+                <NavItem className={styles.navitem}>
+                  <Link href="/signin">
+                    <NavLink>Signin</NavLink>
+                  </Link>
+                </NavItem>
+                <NavItem className={styles.navitem}>
+                  <Link href="/signup">
+                    <NavLink>Signup</NavLink>
+                  </Link>
+                </NavItem>
+              </>
+            )}
+            {/* show logout item only when the user is logged in */}
+            {isAuthenticated() && (
+              <NavItem className={styles.navitem}>
+                <NavLink
+                  onClick={() => logout(() => Router.replace("/signin"))}
+                >
+                  logout
+                </NavLink>
+              </NavItem>
+            )}
           </Nav>
         </Collapse>
       </Navbar>
