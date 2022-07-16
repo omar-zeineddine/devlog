@@ -38,10 +38,42 @@ const Categories = () => {
   const showCategories = () => {
     return categories.map((cat, idx) => {
       return (
-        <button key={idx} className="btn btn-outline-primary mr-1 ml-1 mt-2">
+        <button
+          title={"Double Click to delete Category"}
+          onDoubleClick={() => confirmDelete(cat.slug)}
+          key={idx}
+          className="btn btn-outline-primary mr-1 ml-1 mt-2"
+        >
           {cat.name}
         </button>
       );
+    });
+  };
+
+  // confirm delete category on double click
+  const confirmDelete = (slug) => {
+    let ans = window.confirm("Are you sure you want to delete category");
+    if (ans) {
+      deleteCat(slug);
+    }
+  };
+
+  // deleteCat function
+  const deleteCat = (slug) => {
+    // console.log("delete", slug);
+    deleteCategory(slug, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({
+          ...values,
+          error: false,
+          success: false,
+          name: "",
+          removed: !removed,
+          reload: !reload,
+        });
+      }
     });
   };
 
@@ -74,6 +106,29 @@ const Categories = () => {
     });
   };
 
+  // state based alerts helper methods
+  const showSuccess = () => {
+    if (success) {
+      return <p className="text-success">Category Created</p>;
+    }
+  };
+
+  const showError = () => {
+    if (error) {
+      return <p className="text-danger">Category already exists</p>;
+    }
+  };
+
+  const showRemoved = () => {
+    if (removed) {
+      return <p className="text-danger">Category removed</p>;
+    }
+  };
+
+  const mouseMoveHandler = (e) => {
+    setValues({ ...values, error: false, success: false, removed: "" });
+  };
+
   const newCategoryForm = () => (
     <form onClick={handleSubmit}>
       <div className="form-group">
@@ -97,8 +152,13 @@ const Categories = () => {
 
   return (
     <>
-      {newCategoryForm()}
-      <div>{showCategories()}</div>
+      {showSuccess()}
+      {showRemoved()}
+      {showError()}
+      <div onMouseMove={mouseMoveHandler}>
+        {newCategoryForm()}
+        {showCategories()}
+      </div>
     </>
   );
 };
