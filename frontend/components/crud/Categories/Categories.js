@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { createCategory } from "../../../actions/category";
+import {
+  createCategory,
+  getCategories,
+  getCategory,
+  deleteCategory,
+} from "../../../actions/category";
 import { isAuthenticated, getCookie } from "../../../actions/auth";
 
 const Categories = () => {
@@ -9,9 +14,36 @@ const Categories = () => {
     success: false,
     categories: [],
     removed: false,
+    reload: false,
   });
-  const { name, error, success, categories, removed } = values;
+  const { name, error, success, categories, removed, reload } = values;
   const token = getCookie("token");
+
+  // use Effect hook to list show all categories
+  useEffect(() => {
+    loadCategories();
+  }, [reload]);
+
+  const loadCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({ ...values, categories: data });
+      }
+    });
+  };
+
+  // loop through categories from state
+  const showCategories = () => {
+    return categories.map((cat, idx) => {
+      return (
+        <button key={idx} className="btn btn-outline-primary mr-1 ml-1 mt-2">
+          {cat.name}
+        </button>
+      );
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +52,14 @@ const Categories = () => {
       if (data.error) {
         setValues({ ...values, error: data.error, success: false });
       } else {
-        setValues({ ...values, error: false, success: true, name: "" });
+        setValues({
+          ...values,
+          error: false,
+          success: true,
+          name: "",
+          removed: !removed,
+          reload: !reload,
+        });
       }
     });
   };
@@ -56,7 +95,12 @@ const Categories = () => {
     </form>
   );
 
-  return <>{newCategoryForm()}</>;
+  return (
+    <>
+      {newCategoryForm()}
+      <div>{showCategories()}</div>
+    </>
+  );
 };
 
 export default Categories;
