@@ -35,30 +35,48 @@ const Header = () => {
                 <NavLink>About</NavLink>
               </Link>
             </NavItem>
-            {/* hide signup and sign items when a user is logged in */}
-            {!isAuthenticated() && (
+            {isAuthenticated() ? (
+              <>
+                {isAuthenticated().role === 1 ? (
+                  <NavItem className={styles.navitem}>
+                    <Link href="/admin">
+                      <NavLink>{`${
+                        isAuthenticated().name
+                      }'s Dashboard`}</NavLink>
+                    </Link>
+                  </NavItem>
+                ) : (
+                  <NavItem className={styles.navitem}>
+                    <Link href="/user">
+                      <NavLink>{`${
+                        isAuthenticated().name
+                      }'s Dashboard`}</NavLink>
+                    </Link>
+                  </NavItem>
+                )}
+                <NavItem className={styles.navitem}>
+                  <Link href="/signin">
+                    <NavLink
+                      onClick={() => logout(() => Router.replace("/signin"))}
+                    >
+                      Logout
+                    </NavLink>
+                  </Link>
+                </NavItem>
+              </>
+            ) : (
               <>
                 <NavItem className={styles.navitem}>
                   <Link href="/signin">
-                    <NavLink>Signin</NavLink>
+                    <NavLink>SignIn</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem className={styles.navitem}>
                   <Link href="/signup">
-                    <NavLink>Signup</NavLink>
+                    <NavLink>SignUp</NavLink>
                   </Link>
                 </NavItem>
               </>
-            )}
-            {/* show logout item only when the user is logged in */}
-            {isAuthenticated() && (
-              <NavItem className={styles.navitem}>
-                <NavLink
-                  onClick={() => logout(() => Router.replace("/signin"))}
-                >
-                  logout
-                </NavLink>
-              </NavItem>
             )}
           </Nav>
         </Collapse>
