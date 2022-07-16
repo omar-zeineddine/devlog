@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { preSignup } from "../../../actions/auth";
+import styles from "./SignupComponent.module.scss";
 const SignupComponent = () => {
   const [values, setValues] = useState({
     name: "user",
@@ -16,7 +18,26 @@ const SignupComponent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("handle submit");
-    console.table({ name, email, password, error, loading, message, showForm });
+    // console.table({ name, email, password, error, loading, message, showForm });
+    setValues({ ...values, loading: true, error: false });
+    const userData = { name, email, password };
+
+    preSignup(userData).then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error, loading: false });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          email: "",
+          password: "",
+          error: "",
+          loading: false,
+          message: data.message,
+          showForm: false,
+        });
+      }
+    });
   };
 
   const handleChange = (name) => (e) => {
@@ -24,9 +45,19 @@ const SignupComponent = () => {
     setValues({ ...values, error: false, [name]: e.target.value });
   };
 
+  // alerts
+  const showLoading = () =>
+    loading ? <div className="alert alert-info">Loading...</div> : "";
+
+  const showError = () =>
+    error ? <div className="alert alert-danger">{error}</div> : "";
+
+  const showMessage = () =>
+    message ? <div className="alert alert-info">{message}</div> : "";
+
   const signupForm = () => {
     return (
-      <form onSubmit={handleSubmit}>
+      <form className={styles.signupform} onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             value={name}
@@ -58,13 +89,20 @@ const SignupComponent = () => {
         </div>
 
         <div>
-          <button className="btn btn-primary">signup</button>
+          <button className={styles.signupform__signupBtn}>signup</button>
         </div>
       </form>
     );
   };
 
-  return <>{signupForm()}</>;
+  return (
+    <>
+      {showError()}
+      {showLoading()}
+      {showMessage()}
+      {showForm && signupForm()}
+    </>
+  );
 };
 
 export default SignupComponent;
