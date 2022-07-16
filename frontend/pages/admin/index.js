@@ -1,10 +1,11 @@
 import Layout from "../../components/Layout";
 import Admin from "../../components/auth/Admin/Admin";
+import AdminDashboard from "../../components/AdminDashboard/AdminDashboard";
 
 const AdminPage = () => (
   <Layout>
     <Admin>
-      <h2>admin</h2>
+      <AdminDashboard />
     </Admin>
   </Layout>
 );
