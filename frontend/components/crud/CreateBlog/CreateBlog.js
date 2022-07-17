@@ -22,6 +22,10 @@ const CreateBlog = ({ router }) => {
       return false;
     }
   };
+
+  // states
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
   const [body, setBody] = useState({ getBlogDataFromLs });
   const [values, setValues] = useState({
     error: "",
@@ -37,7 +41,31 @@ const CreateBlog = ({ router }) => {
   // have formData ready to use when component mounts
   useEffect(() => {
     setValues({ ...values, formData: new FormData() });
+    initCats();
+    initTags();
   }, [router]);
+
+  // initialize categories state
+  const initCats = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setCategories(data);
+      }
+    });
+  };
+
+  // initialize tags state
+  const initTags = () => {
+    getTags().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setTags(data);
+      }
+    });
+  };
 
   const publishBlog = (e) => {
     e.preventDefault();
@@ -82,7 +110,7 @@ const CreateBlog = ({ router }) => {
             modules={CreateBlog.modules}
             format={CreateBlog.formats}
             value={body}
-            placeholder="write something amazing"
+            placeholder=""
             onChange={handleBody}
           />
         </div>
@@ -103,6 +131,10 @@ const CreateBlog = ({ router }) => {
       {JSON.stringify(title)}
       <hr />
       {JSON.stringify(body)}
+      <hr />
+      {JSON.stringify(categories)}
+      <hr />
+      {JSON.stringify(tags)}
     </>
   );
 };
