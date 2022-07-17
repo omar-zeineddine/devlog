@@ -92,50 +92,68 @@ const CreateBlog = ({ router }) => {
     }
   };
 
-  const createBlogForm = () => {
-    return (
-      <form onSubmit={publishBlog}>
-        <div className="form-group">
-          <label className="text-muted">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            value={title}
-            onChange={handleChange("title")}
-          />
-        </div>
-
-        <div className="form-group">
-          <ReactQuill
-            modules={CreateBlog.modules}
-            format={CreateBlog.formats}
-            value={body}
-            placeholder=""
-            onChange={handleBody}
-          />
-        </div>
-
-        <div>
-          <button type="submit" className="btn btn-primary">
-            Publish
-          </button>
-        </div>
-      </form>
-    );
-  };
-
   return (
-    <>
-      {createBlogForm()}
-      <hr />
-      {JSON.stringify(title)}
-      <hr />
-      {JSON.stringify(body)}
-      <hr />
-      {JSON.stringify(categories)}
-      <hr />
-      {JSON.stringify(tags)}
-    </>
+    <div className="container">
+      <div className="row">
+        <div className="col-xl-8 mb-4">
+          <form onSubmit={publishBlog}>
+            <div className="form-group">
+              <label htmlFor="title">Blog Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                placeholder=""
+                onChange={handleChange("title")}
+              />
+            </div>
+            <div className="form-group">
+              <ReactQuill
+                modules={CreateBlog.modules}
+                formats={CreateBlog.formats}
+                value={body}
+                placeholder=""
+                onChange={handleBody}
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary">
+              Publish
+            </button>
+          </form>
+        </div>
+        <div className="col-xl-4">
+          <h5>Categories</h5>
+          <ul
+            className="list-unstyled"
+            style={{ maxHeight: "140px", overflowY: "scroll" }}
+          >
+            {categories &&
+              categories.map((category) => (
+                <li key={category._id}>
+                  <input type="checkbox" className="mr-2" />
+                  <label className="form-check-label">{category.name}</label>
+                </li>
+              ))}
+          </ul>
+
+          <hr />
+          <h5>Tags</h5>
+          <ul
+            className="list-unstyled"
+            style={{ maxHeight: "140px", overflowY: "scroll" }}
+          >
+            {tags &&
+              tags.map((tag) => (
+                <li key={tag._id}>
+                  <input type="checkbox" className="mr-2" />
+                  <label className="form-check-label">{tag.name}</label>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 
