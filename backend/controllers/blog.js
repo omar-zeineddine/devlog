@@ -29,6 +29,9 @@ exports.createBlog = (req, res) => {
     blog.metatitle = `${title} - ${process.env.APP_NAME}`;
     blog.metadescription = stripHtml(body.substring(0, 160));
     blog.postedBy = req.auth._id;
+    // categories and tags comma separated arrays
+    let catsArray = categories && categories.split(",");
+    let tagsArray = tags && tags.split(",");
 
     // handle file uploads
     if (files.photo) {
@@ -68,6 +71,8 @@ exports.createBlog = (req, res) => {
       });
     }
 
+    // handle categories and tags arrays
+
     // save the blog
     blog.save((err, result) => {
       if (err) {
@@ -75,7 +80,38 @@ exports.createBlog = (req, res) => {
           error: errorHandler(err),
         });
       }
-      res.json(result);
+      // res.json(result);
+
+      // find and update categories
+      Blog.findByIdAndUpdate(
+        // get id of recently saved blog
+        result._id,
+        // mongoose push method to send categories ids to proper field in the blog model
+        { $push: { categories: catsArray } },
+        // return updated data, blog with added categories
+        { new: true }
+      ).exec((err, result) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler(err),
+          });
+        } else {
+          // Similarly, push and update tags
+          Blog.findByIdAndUpdate(
+            result._id,
+            { $push: { tags: tagsArray } },
+            { new: true }
+          ).exec((err, result) => {
+            if (err) {
+              return res.stats(400).json({
+                error: errorHandler(err),
+              });
+            } else {
+              res.json(result);
+            }
+          });
+        }
+      });
     });
   });
 };
