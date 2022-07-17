@@ -4,8 +4,8 @@ const Tag = require("../models/Tag");
 const formidable = require("formidable");
 const slugify = require("slugify");
 const _ = require("lodash");
+const stripHtml = require("string-strip-html");
 const fs = require("fs");
-const { stripHtml } = require("string-strip-html");
 const { errorHandler } = require("../utils/dbErrorHandler");
 
 exports.createBlog = (req, res) => {
@@ -27,6 +27,7 @@ exports.createBlog = (req, res) => {
     blog.body = body;
     blog.slug = slugify(title).toLowerCase();
     blog.metatitle = `${title} - ${process.env.APP_NAME}`;
+    blog.metadescription = stripHtml(body.substring(0, 160));
     blog.postedBy = req.auth._id;
 
     // handle file uploads
@@ -38,6 +39,33 @@ exports.createBlog = (req, res) => {
       }
       blog.photo.data = fs.readFileSync(files.photo.filepath);
       blog.photo.contentType = files.photo.mimetype;
+    }
+
+    // blog field validators
+    if (!title || !title.length) {
+      return res.status(400).json({
+        error: "Title is a required field",
+      });
+    }
+
+    // body at least 200 characters long
+    if (!body || body.length < 200) {
+      return res.status(400).json({
+        error: "Blog content is too short",
+      });
+    }
+
+    // categories and tags
+    if (!categories || categories.length === 0) {
+      return res.status(400).json({
+        error: "A minimum of one category is required for the blog",
+      });
+    }
+
+    if (!tags || tags.length === 0) {
+      return res.status(400).json({
+        error: "A minimum of one tag is required for the blog",
+      });
     }
 
     // save the blog
