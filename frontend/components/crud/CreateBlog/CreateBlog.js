@@ -10,7 +10,19 @@ import { createBlog } from "../../../actions/blog";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const CreateBlog = ({ router }) => {
-  const [body, setBody] = useState({});
+  // get blog data from local storage
+  const getBlogDataFromLs = () => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    if (localStorage.getItem("blog")) {
+      return JSON.parse(localStorage.getItem("blog"));
+    } else {
+      return false;
+    }
+  };
+  const [body, setBody] = useState({ getBlogDataFromLs });
   const [values, setValues] = useState({
     error: "",
     sizeError: "",
@@ -22,17 +34,34 @@ const CreateBlog = ({ router }) => {
 
   const { error, sizeError, success, formData, title, hidePublishBtn } = values;
 
+  // have formData ready to use when component mounts
+  useEffect(() => {
+    setValues({ ...values, formData: new FormData() });
+  }, [router]);
+
   const publishBlog = (e) => {
     e.preventDefault();
     console.log("blog created");
   };
 
   const handleChange = (name) => (e) => {
-    console.log(e.target.value);
+    /* console.log(e.target.value); */
+    const value = name === "photo" ? e.target.files[0] : e.target.value;
+    // form data to be processed by the backend to create a new blog
+    formData.set(name, value);
+    setValues({ ...values, [name]: value, formData, error: "" });
   };
 
   const handleBody = (e) => {
-    console.log(e);
+    /* console.log(e); */
+    // push the event into body
+    setBody(e);
+    // populate form data
+    formData.set("body", e);
+    // save to local storage to prevent data loss on page refresh
+    if (typeof window !== "undefined") {
+      localStorage.setItem("blog", JSON.stringify(e));
+    }
   };
 
   const createBlogForm = () => {
@@ -67,7 +96,15 @@ const CreateBlog = ({ router }) => {
     );
   };
 
-  return <>{createBlogForm()}</>;
+  return (
+    <>
+      {createBlogForm()}
+      <hr />
+      {JSON.stringify(title)}
+      <hr />
+      {JSON.stringify(body)}
+    </>
+  );
 };
 
 // react-quill toolbar modules
@@ -78,7 +115,6 @@ CreateBlog.modules = {
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
     ["link", "image", "video"],
-    ["clean"],
     ["code-block"],
   ],
 };
