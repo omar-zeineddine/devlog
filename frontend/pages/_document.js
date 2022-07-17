@@ -12,6 +12,10 @@ export default function Document() {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+        />
         {/* import react-quill css */}
         {/* https://www.npmjs.com/package/react-quill */}
         <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css" />

@@ -10,7 +10,12 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import NProgress from "nprogress";
 import styles from "./Header.module.scss";
+
+Router.onRouteChangeStart = (url) => NProgress.start();
+Router.onRouteChangeComplete = (url) => NProgress.done();
+Router.onRouteChangeError = (url) => NProgress.done();
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,12 +73,12 @@ const Header = () => {
               <>
                 <NavItem className={styles.navitem}>
                   <Link href="/signin">
-                    <NavLink>SignIn</NavLink>
+                    <NavLink>Signin</NavLink>
                   </Link>
                 </NavItem>
                 <NavItem className={styles.navitem}>
                   <Link href="/signup">
-                    <NavLink>SignUp</NavLink>
+                    <NavLink>Signup</NavLink>
                   </Link>
                 </NavItem>
               </>
