@@ -50,6 +50,8 @@ const CreateBlog = ({ router }) => {
 
         <div className="form-group">
           <ReactQuill
+            modules={CreateBlog.modules}
+            format={CreateBlog.formats}
             value={body}
             placeholder="write something amazing"
             onChange={handleBody}
@@ -65,12 +67,37 @@ const CreateBlog = ({ router }) => {
     );
   };
 
-  return (
-    <>
-      <h2>Create a blog here hehehe</h2>
-      {createBlogForm()}
-    </>
-  );
+  return <>{createBlogForm()}</>;
 };
+
+// react-quill toolbar modules
+CreateBlog.modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, 6] }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image", "video"],
+    ["clean"],
+    ["code-block"],
+  ],
+};
+
+CreateBlog.formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "link",
+  "image",
+  "video",
+  "code-block",
+];
 
 export default withRouter(CreateBlog);
