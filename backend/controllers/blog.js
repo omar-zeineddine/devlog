@@ -7,6 +7,7 @@ const _ = require("lodash");
 const stripHtml = require("string-strip-html");
 const fs = require("fs");
 const { errorHandler } = require("../utils/dbErrorHandler");
+const { textTrim } = require("../utils/trim");
 
 exports.createBlog = (req, res) => {
   // get all form data
@@ -25,6 +26,7 @@ exports.createBlog = (req, res) => {
     let blog = new Blog();
     blog.title = title;
     blog.body = body;
+    blog.excerpt = textTrim(body, 250, " ", "...");
     blog.slug = slugify(title).toLowerCase();
     blog.metatitle = `${title} - ${process.env.APP_NAME}`;
     blog.metadescription = stripHtml(body.substring(0, 160));
