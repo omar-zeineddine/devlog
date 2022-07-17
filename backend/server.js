@@ -9,6 +9,7 @@ require("dotenv").config();
 // add routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const blogRoutes = require("./routes/blog");
 const categoryRoutes = require("./routes/category");
 const tagRoutes = require("./routes/tag");
 
@@ -36,6 +37,7 @@ if (process.env.NODE_ENV === "dev") {
 // routes middleware
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", blogRoutes);
 app.use("/api/v1", categoryRoutes);
 app.use("/api/v1", tagRoutes);
 
