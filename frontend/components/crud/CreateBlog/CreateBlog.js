@@ -93,7 +93,7 @@ const CreateBlog = ({ router }) => {
     setCheckedCats(allCheckedCategories);
     formData.set("categories", allCheckedCategories);
 
-    console.log(allCheckedCategories);
+    // console.log(allCheckedCategories);
   };
 
   // add or remove checked tags from state
@@ -116,7 +116,7 @@ const CreateBlog = ({ router }) => {
     setCheckedTags(allCheckedTags);
     formData.set("tags", allCheckedTags);
 
-    console.log(allCheckedTags);
+    // console.log(allCheckedTags);
   };
 
   const publishBlog = (e) => {
@@ -139,8 +139,8 @@ const CreateBlog = ({ router }) => {
       }
     });
 
-    console.log("FORM DATA:", formData);
-    console.log(values);
+    // console.log("FORM DATA:", formData);
+    // console.log(values);
   };
 
   const handleChange = (name) => (e) => {
@@ -152,7 +152,7 @@ const CreateBlog = ({ router }) => {
   };
 
   const handleBody = (e) => {
-    console.log(e);
+    // console.log(e);
     // push the event into body
     setBody(e);
     // populate form data
@@ -238,12 +238,14 @@ const CreateBlog = ({ router }) => {
             {categories &&
               categories.map((category) => (
                 <li key={category._id}>
-                  <input
-                    onChange={handleCatToggleCheckbox(category._id)}
-                    type="checkbox"
-                    className="mr-2"
-                  />
-                  <label className="form-check-label">{category.name}</label>
+                  <label className="form-check-label">
+                    <input
+                      onChange={handleCatToggleCheckbox(category._id)}
+                      type="checkbox"
+                      className="mr-2"
+                    />
+                    {category.name}
+                  </label>
                 </li>
               ))}
           </ul>
@@ -257,12 +259,14 @@ const CreateBlog = ({ router }) => {
             {tags &&
               tags.map((tag) => (
                 <li key={tag._id}>
-                  <input
-                    onChange={handleTagToggleCheckbox(tag._id)}
-                    type="checkbox"
-                    className="mr-2"
-                  />
-                  <label className="form-check-label">{tag.name}</label>
+                  <label className="form-check-label">
+                    <input
+                      onChange={handleTagToggleCheckbox(tag._id)}
+                      type="checkbox"
+                      className="mr-2"
+                    />
+                    {tag.name}
+                  </label>
                 </li>
               ))}
           </ul>
