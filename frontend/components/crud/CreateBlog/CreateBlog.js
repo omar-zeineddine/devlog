@@ -5,6 +5,7 @@ import { getCookie } from "../../../actions/auth";
 import { getCategories } from "../../../actions/category";
 import { getTags } from "../../../actions/tag";
 import { createBlog } from "../../../actions/blog";
+import { QuillModules, QuillFormats } from "../../../utils/Quill";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -199,8 +200,8 @@ const CreateBlog = ({ router }) => {
           </div>
           <div className="form-group">
             <ReactQuill
-              modules={CreateBlog.modules}
-              formats={CreateBlog.formats}
+              modules={QuillModules}
+              formats={QuillFormats}
               value={body}
               placeholder=""
               onChange={handleBody}
@@ -275,22 +276,5 @@ const CreateBlog = ({ router }) => {
     </>
   );
 };
-
-CreateBlog.formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "link",
-  "image",
-  "video",
-  "code-block",
-];
 
 export default withRouter(CreateBlog);
