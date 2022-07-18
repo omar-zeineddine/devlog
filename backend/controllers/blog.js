@@ -117,3 +117,32 @@ exports.createBlog = (req, res) => {
     });
   });
 };
+
+exports.getBlogs = (req, res) => {
+  // pass empty object
+  Blog.find({})
+    // populate blog with associated cats, tags, and poster
+    .populate("categories", "_id name slug")
+    .populate("tags", "_id name slug")
+    .populate("postedBy", "_id name username")
+    // return the following fields without the photo
+    .select(
+      "_id title slug excerpt categories tags postedBy createdBy updatedAt"
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(data);
+    });
+};
+
+exports.getBlog = (req, res) => {};
+
+exports.removeBlog = (req, res) => {};
+
+exports.updateBlog = (req, res) => {};
+
+exports.getAllBlogsCategoriesAndTags = (req, res) => {};
