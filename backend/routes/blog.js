@@ -1,8 +1,29 @@
 const express = require("express");
 const router = express.Router();
+const {
+  createBlog,
+  getBlog,
+  getBlogs,
+  getAllBlogsCategoriesAndTags,
+  updateBlog,
+  removeBlog,
+} = require("../controllers/blog");
+const { requireSignin, adminMiddleWare } = require("../controllers/auth");
 
-router.get("/", (req, res) => {
-  res.json({ time: Date().toString() });
-});
+router.post("/blog", requireSignin, adminMiddleWare, createBlog);
+
+// get single blog
+router.get("/blog/:slug", getBlog);
+
+// get all blogs
+router.get("/blogs", getBlogs);
+// get all blogs (use post method - pass additional queries)
+router.post("/blogs-categories-tags", getAllBlogsCategoriesAndTags);
+
+// update
+router.put("/blog/:slug", requireSignin, adminMiddleWare, updateBlog);
+
+// delete
+router.delete("/blog/:slug", requireSignin, adminMiddleWare, removeBlog);
 
 module.exports = router;
