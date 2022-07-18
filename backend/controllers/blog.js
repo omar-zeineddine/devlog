@@ -139,10 +139,59 @@ exports.getBlogs = (req, res) => {
     });
 };
 
-exports.getBlog = (req, res) => {};
+exports.getAllBlogsCategoriesAndTags = (req, res) => {
+  // grab limit: number of blogposts to be sent on each request
+  // get limit from frontend
+  let limit = req.body.limit ? parseInt(req.body.limt) : 10; // set 10 as default limit
+  let skip = req.body.skip ? parseInt(req.body.skip) : 0; // set default skip val to 0
+
+  // initialize variables to be populated based on queries
+  let blogs, categories, tags;
+
+  Blog.find({})
+    .populate("categories", "_id name slug")
+    .populate("tags", "_id name slug")
+    .populate("postedBy", "_id name username profile")
+    // return the latest blogs first
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .select(
+      "_id title slug excerpt categories tags postedBy createdAt updatedAt"
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err),
+        });
+      }
+      blogs = data; // all blogs
+      // get all categories
+      Category.find({}).exec((err, cat) => {
+        if (err) {
+          return res.json({
+            error: errorHandler(err),
+          });
+        }
+        categories = cat; // all categories
+
+        // get all tags
+        //
+        Tag.find({}).exec((err, tag) => {
+          if (err) {
+            return res.json({
+              error: errorHandler(err),
+            });
+          }
+          tags = tag; // all categories
+
+          // return all blogs cats and tags
+          // return size -> for load more button
+          res.json({ blogs, categories, tags, size: blogs.length });
+        });
+      });
+    });
+};
 
 exports.removeBlog = (req, res) => {};
-
+exports.getBlog = (req, res) => {};
 exports.updateBlog = (req, res) => {};
-
-exports.getAllBlogsCategoriesAndTags = (req, res) => {};
