@@ -118,6 +118,27 @@ exports.createBlog = (req, res) => {
   });
 };
 
+// get single blog
+exports.getBlog = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+  Blog.findOne({ slug })
+    .populate("categories", "_id name slug")
+    .populate("tags", "_id name slug")
+    .populate("postedBy", "_id name username")
+    // return body instead of excerpt
+    .select(
+      "_id title body slug metatitle metadescription categories tags postedBy createdBy updatedAt"
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(data);
+    });
+};
+
 exports.getBlogs = (req, res) => {
   // pass empty object
   Blog.find({})
@@ -192,6 +213,20 @@ exports.getAllBlogsCategoriesAndTags = (req, res) => {
     });
 };
 
-exports.removeBlog = (req, res) => {};
-exports.getBlog = (req, res) => {};
+// delete
+exports.removeBlog = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+  Blog.findOneAndRemove({ slug }).exec((err, data) => {
+    if (err) {
+      return res.json({
+        error: errorHandler(err),
+      });
+    }
+    res.json({
+      message: "blog has been deleted",
+    });
+  });
+};
+
+// update
 exports.updateBlog = (req, res) => {};
