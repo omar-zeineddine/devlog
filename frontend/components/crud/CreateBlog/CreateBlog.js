@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import Router from "next/router";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { withRouter } from "next/router"; // get access to router props
-import { getCookie, isAuthenticated } from "../../../actions/auth";
+import { getCookie } from "../../../actions/auth";
 import { getCategories } from "../../../actions/category";
 import { getTags } from "../../../actions/tag";
 import { createBlog } from "../../../actions/blog";
+
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const CreateBlog = ({ router }) => {
@@ -32,7 +31,7 @@ const CreateBlog = ({ router }) => {
   const [checkedCats, setCheckedCats] = useState([]);
   const [checkedTags, setCheckedTags] = useState([]);
 
-  const [body, setBody] = useState({ getBlogDataFromLs });
+  const [body, setBody] = useState(getBlogDataFromLs());
   const [values, setValues] = useState({
     error: "",
     sizeError: "",
@@ -45,7 +44,7 @@ const CreateBlog = ({ router }) => {
   const { error, sizeError, success, formData, title, hidePublishBtn } = values;
   const token = getCookie("token");
 
-  // have formData ready to use when component mounts
+  // have formData ready to use when component is loaded
   useEffect(() => {
     setValues({ ...values, formData: new FormData() });
     initCats();
@@ -153,7 +152,7 @@ const CreateBlog = ({ router }) => {
   };
 
   const handleBody = (e) => {
-    /* console.log(e); */
+    console.log(e);
     // push the event into body
     setBody(e);
     // populate form data
@@ -163,6 +162,25 @@ const CreateBlog = ({ router }) => {
       localStorage.setItem("blog", JSON.stringify(e));
     }
   };
+
+  // display alerts
+  const showError = () => (
+    <div
+      className="alert alert-danger mt-3"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
+  const showSuccess = () => (
+    <div
+      className="alert alert-success mt-3"
+      style={{ display: success ? "" : "none" }}
+    >
+      {success}
+    </div>
+  );
 
   return (
     <>
@@ -174,7 +192,8 @@ const CreateBlog = ({ router }) => {
               type="text"
               className="form-control"
               id="title"
-              placeholder="Enter title"
+              value={title}
+              placeholder="Title"
               onChange={handleChange("title")}
             />
           </div>
@@ -183,7 +202,7 @@ const CreateBlog = ({ router }) => {
               modules={CreateBlog.modules}
               formats={CreateBlog.formats}
               value={body}
-              placeholder="Write something amazing"
+              placeholder=""
               onChange={handleBody}
             />
           </div>
@@ -191,6 +210,8 @@ const CreateBlog = ({ router }) => {
           <button type="submit" className="btn btn-primary">
             Publish
           </button>
+          {showError()}
+          {showSuccess()}
         </form>
       </div>
       <div className="col-xl-4">
