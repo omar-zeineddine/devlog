@@ -11,21 +11,60 @@ const BlogsPage = ({ blogs, categories, tags, size }) => {
   return (
     <Layout>
       <main>
-        <div className="container-fluid">
-          <header>
-            <div className="col-md-12 py-3">
-              <h1 className="display-4a font-weight-bold text-center">
-                Cloud Related Blogs
-              </h1>
+        <header>
+          <div className="container-fluid">
+            <div className="col-xl-12 pt-3">
+              <h1 className="display-5 font-weight-bold text-center">Blogs</h1>
             </div>
-            <section>
-              <p>Categories & Tags</p>
-            </section>
-          </header>
-        </div>
+          </div>
+        </header>
+
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-12">{JSON.stringify(blogs)}</div>
+            <div className="col-xl-12">
+              {/* loop over blogs and index*/}
+              {blogs &&
+                blogs.map((blog, idx) => (
+                  // output each blog as an article, having a unique key passed as idx
+                  <article key={idx} className="mb-4">
+                    <div className="lead">
+                      <header>
+                        {/* use next link: clicking on blog title --> single blog view page */}
+                        <Link href={`/blogs/${blog.slug}`}>
+                          <a>
+                            <h2 className="py-3">{blog.title}</h2>
+                          </a>
+                        </Link>
+                      </header>
+                      <section>
+                        <p className="mark ml-1 py-2">
+                          Written by {blog.postedBy.name} | Published{" "}
+                          {moment(blog.updatedAt).fromNow()}
+                        </p>
+                      </section>
+                      <section>
+                        <p>show categories and tags</p>
+                      </section>
+
+                      <div className="row">
+                        <div className="col-xl-4">
+                          {/* todo: add image */}
+                          Image
+                        </div>
+                        <div className="col-xl-8">
+                          <section>
+                            <div>{renderHTML(blog.excerpt)}</div>
+                            <Link href={`/blog/${blog.slug}`}>
+                              <a className="btn btn-primary mt-3">Read More</a>
+                            </Link>
+                          </section>
+                        </div>
+                      </div>
+                    </div>
+                    <hr />
+                  </article>
+                ))}
+            </div>
           </div>
         </div>
       </main>
