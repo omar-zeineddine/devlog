@@ -7,6 +7,7 @@ const {
   getAllBlogsCategoriesAndTags,
   updateBlog,
   removeBlog,
+  getPhoto,
 } = require("../controllers/blog");
 const { requireSignin, adminMiddleWare } = require("../controllers/auth");
 
@@ -19,6 +20,9 @@ router.get("/blog/:slug", getBlog);
 router.get("/blogs", getBlogs);
 // get all blogs (use post method - pass additional queries)
 router.post("/blogs-categories-tags", getAllBlogsCategoriesAndTags);
+
+// get blog image
+router.get("/blog/photo/:slug", getPhoto);
 
 // update
 router.put("/blog/:slug", requireSignin, adminMiddleWare, updateBlog);
