@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
 import { API } from "../../config";
-import Card from "../../components/blog/Card";
+import Card from "../../components/blog/Card/Card";
 
 // grab properties that are returned from initial props
 const BlogsPage = ({ blogs, categories, tags, size }) => {
@@ -13,7 +13,29 @@ const BlogsPage = ({ blogs, categories, tags, size }) => {
         <header>
           <div className="container-fluid">
             <div className="col-xl-12 pt-3">
-              <h1 className="display-5 font-weight-bold text-center">Blogs</h1>
+              <h1 className="display-5 font-weight-bold text-center">
+                Recent Blogs
+              </h1>
+
+              <section className="text-center">
+                {/* loop through all categories and return as link */}
+                {categories.map((category) => (
+                  <Link
+                    key={category._id}
+                    href={`/categories/${category.slug}`}
+                  >
+                    <a className="btn btn-outline-info mr-2 mt-1">
+                      {category.name}
+                    </a>
+                  </Link>
+                ))}
+
+                {tags.map((tag) => (
+                  <Link key={tag._id} href={`/tags/${tag.slug}`}>
+                    <a className="btn btn-outline-dark mr-2 mt-1">{tag.name}</a>
+                  </Link>
+                ))}
+              </section>
             </div>
           </div>
         </header>
