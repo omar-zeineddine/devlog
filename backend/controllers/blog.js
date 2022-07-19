@@ -261,8 +261,8 @@ exports.updateBlog = (req, res) => {
 
       // if body has changed, update the excerpt and meta description
       if (body) {
-        oldBlog.excerpt = smartTrim(body, 320, " ", " ...");
-        oldBlog.metadesceiption = stripHtml(body.substring(0, 160));
+        oldBlog.excerpt = textTrim(body, 320, " ", " ...");
+        oldBlog.metadescription = stripHtml(body.substring(0, 160));
       }
 
       // if categories have changed, perform update
@@ -313,5 +313,26 @@ exports.getPhoto = (req, res) => {
       }
       res.set("Content-Type", blog.photo.contentType);
       return res.send(blog.photo.data);
+    });
+};
+
+// get related blogs
+exports.getRelatedBlogs = (req, res) => {
+  let limit = req.body.limit ? parseInt(req.body.limit) : 3;
+  const { _id, categories } = req.body;
+
+  // find all blogs, excluding the current blog, based on categories of the current blog
+  Blog.find({ _id: { $ne: _id }, categories: { $in: categories } })
+    .limit(limit)
+    .populate("postedBy", "_id name profile")
+    // selected fields
+    .select("title slug excerpt postedBy createdAt updatedAt")
+    .exec((err, blogs) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Blogs not found",
+        });
+      }
+      res.json(blogs);
     });
 };

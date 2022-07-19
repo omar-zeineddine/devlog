@@ -5,6 +5,7 @@ const {
   getBlog,
   getBlogs,
   getAllBlogsCategoriesAndTags,
+  getRelatedBlogs,
   updateBlog,
   removeBlog,
   getPhoto,
@@ -23,6 +24,9 @@ router.post("/blogs-categories-tags", getAllBlogsCategoriesAndTags);
 
 // get blog image
 router.get("/blog/photo/:slug", getPhoto);
+
+// get relate blog (use post method - pass additional queries)
+router.post("/blogs/related", getRelatedBlogs);
 
 // update
 router.put("/blog/:slug", requireSignin, adminMiddleWare, updateBlog);
