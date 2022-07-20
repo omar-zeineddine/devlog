@@ -148,7 +148,7 @@ exports.getBlogs = (req, res) => {
     .populate("postedBy", "_id name username")
     // return the following fields without the photo
     .select(
-      "_id title slug excerpt categories tags postedBy createdBy updatedAt"
+      "_id title blog slug excerpt categories tags postedBy createdBy updatedAt"
     )
     .exec((err, data) => {
       if (err) {
