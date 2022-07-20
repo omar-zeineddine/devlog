@@ -6,7 +6,33 @@ import { API } from "../../config";
 import Card from "../../components/blog/Card/Card";
 
 // grab properties that are returned from initial props
-const BlogsPage = ({ blogs, categories, tags, size }) => {
+const BlogsPage = (props) => {
+  // destructure props
+  const { blogs, categories, tags, totalBlogs, blogsLimit, blogsSkip, router } =
+    props;
+
+  // states
+  const [limit, setLimit] = useState(blogsLimit);
+  const [skip, setSkip] = useState(0);
+  const [size, setSize] = useState(totalBlogs);
+  const [loadedBlogs, setLoadedBlogs] = useState([]);
+
+  // load more blogs function
+  const loadMoreBlogs = () => {
+    let blogsToSkip = limit + skip;
+
+    // merge blogs to existing ones
+    listBlogsWithCategoriesAndTags(blogsToSkip, limit).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setLoadedBlogs([...loadedBlogs, ...data.blogs]);
+        setSize(data.size);
+        setSkip(blogsToSkip);
+      }
+    });
+  };
+
   return (
     <Layout>
       <main>
@@ -55,6 +81,31 @@ const BlogsPage = ({ blogs, categories, tags, size }) => {
             </div>
           </div>
         </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-12">
+              {loadedBlogs &&
+                loadedBlogs.map((blog, idx) => (
+                  <article key={idx} className="mb-4">
+                    <Card blog={blog} />
+                    <hr />
+                  </article>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          {/* if size greater than 0 and size is greater than or equal to limit, show button */}
+          {size > 0 && size >= limit && (
+            <div className="row">
+              <div className="col-xl-12 text-center">
+                <button onClick={loadMoreBlogs} className="btn btn-dark">
+                  Load More
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </main>
     </Layout>
   );
@@ -64,20 +115,22 @@ const BlogsPage = ({ blogs, categories, tags, size }) => {
 
 // get initial props can be used only on pages not components
 BlogsPage.getInitialProps = () => {
-  // make request to backend, get data
-  return listBlogsWithCategoriesAndTags().then((data) => {
+  let skip = 0;
+  let limit = 1;
+  return listBlogsWithCategoriesAndTags(skip, limit).then((data) => {
     if (data.error) {
       console.log(data.error);
     } else {
-      // necessary to return data to SSR page
       return {
         blogs: data.blogs,
         categories: data.categories,
         tags: data.tags,
-        size: data.size,
+        /* size: data.size, */
+        totalBlogs: data.size,
+        blogsLimit: limit,
+        blogsSkip: skip,
       };
     }
   });
 };
-
 export default BlogsPage;
