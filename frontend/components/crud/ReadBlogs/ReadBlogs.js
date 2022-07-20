@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Router from "next/router";
-import { getCookie, isAuth } from "../../../actions/auth";
+import { getCookie, isAuthenticated } from "../../../actions/auth";
 import { showAllBlogs, removeBlog } from "../../../actions/blog";
 import moment from "moment";
 
@@ -11,8 +11,9 @@ const ReadBlogs = () => {
   const token = getCookie("token");
 
   const loadBlogs = async () => {
-    const blogs = await showAllBlogs();
+    let blogs;
     try {
+      blogs = await fetchAllBlogs();
       if (blogs) {
         setBlogs(blogs);
       }
@@ -52,7 +53,16 @@ const ReadBlogs = () => {
             <p>Posted by {blog.postedBy.name}</p>
             <p>Published on {moment(blog.updatedAt).fromNow()}</p>
 
-            <button className="btn btn-info btn-sm card-link">Update</button>
+            {/* <button className="btn btn-info btn-sm card-link">Update</button> */}
+            {isAuthenticated() && isAuthenticated().role === 1 ? (
+              <Link href={`/admin/crud/${blog.slug}`}>
+                <a className="btn btn-info btn-sm card-link">Update</a>
+              </Link>
+            ) : (
+              <Link href={`/user/crud/${blog.slug}`}>
+                <a className="btn btn-info btn-sm card-link">Update</a>
+              </Link>
+            )}
             <button
               onClick={() => confirmAndDelete(blog.slug)}
               className="btn btn-danger btn-sm card-link"
