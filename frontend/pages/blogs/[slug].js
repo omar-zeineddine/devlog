@@ -1,11 +1,30 @@
 import Link from "next/link";
 import Layout from "../../components/Layout";
-import { showBlog } from "../../actions/blog";
 import { API } from "../../config";
+import { useState, useEffect } from "react";
+import { showBlog, showRelatedBlogs } from "../../actions/blog";
 import renderHTML from "react-render-html";
 import moment from "moment";
+import RelatedBlogCard from "../../components/blog/RelatedBlogCard/RelatedBlogCard";
 
 const BlogPage = ({ blog, query }) => {
+  // states
+  const [relatedBlogs, setRelatedBlogs] = useState([]);
+
+  const loadRelatedBlogs = () => {
+    showRelatedBlogs(blog).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setRelatedBlogs(data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadRelatedBlogs();
+  }, []);
+
   return (
     <>
       <Layout>
@@ -65,7 +84,13 @@ const BlogPage = ({ blog, query }) => {
             <div className="container mt-5">
               <h4 className="text-center">Related Blogs</h4>
               <hr />
-              <p>todo: show related blogs</p>
+              <div className="row">
+                {relatedBlogs.map((blog) => (
+                  <div className="col-md-4" key={blog._id}>
+                    <RelatedBlogCard blog={blog} />
+                  </div>
+                ))}
+              </div>
               <p>todo: show blog comments</p>
             </div>
           </article>
@@ -80,7 +105,7 @@ BlogPage.getInitialProps = ({ query }) => {
     if (data.error) {
       console.log(data.error);
     } else {
-      console.log("get initial props in single blog", data);
+      // console.log("get initial props in single blog", data);
       return { blog: data, query };
     }
   });
