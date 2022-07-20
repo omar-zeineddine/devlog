@@ -86,7 +86,7 @@ const UpdateBlog = ({ router }) => {
   const setCategoriesArray = (categories) => {
     let categoriesArray = [];
     categories.map((category) => categoriesArray.push(category._id));
-    setCheckedCategories(categoriesArray);
+    setCheckedCats(categoriesArray);
   };
 
   const setTagsArray = (tags) => {
@@ -122,7 +122,7 @@ const UpdateBlog = ({ router }) => {
       allCheckedCategories.splice(checkedCategory, 1);
     }
 
-    setCheckedCategories(allCheckedCategories);
+    setCheckedCats(allCheckedCategories);
     formData.set("categories", allCheckedCategories);
 
     // console.log(allCheckedCategories);
@@ -158,6 +158,27 @@ const UpdateBlog = ({ router }) => {
 
   const editBlog = async (event) => {
     // console.log("edit blog");
+    event.preventDefault();
+
+    let updatedBlog;
+    try {
+      updatedBlog = await updateBlog(formData, token, slug);
+      setValues({ ...values, title: "", success: "Update Successful!" });
+
+      if (isAuthenticated() && isAuthenticated().role === 1) {
+        // if authenticated and admin
+        // avoid latency of image uploads
+        // Router.replace(`/admin/crud/${slug}`);
+        Router.replace(`/blogs`);
+      } else if (isAuthenticated() && isAuthenticated().role === 0) {
+        // if authenticated and user
+        // Router.replace(`/user/crud/${slug}`);
+        Router.replace(`/blogs`);
+      }
+    } catch (error) {
+      console.error(error);
+      setValues({ ...values, error: updatedBlog.error });
+    }
   };
 
   return (
@@ -223,13 +244,15 @@ const UpdateBlog = ({ router }) => {
             {categories &&
               categories.map((category) => (
                 <li key={category._id}>
-                  <input
-                    checked={checkCatsAndTags(checkedCats, category._id)}
-                    onChange={handleCatToggleCheckbox(category._id)}
-                    type="checkbox"
-                    className="mr-2"
-                  />
-                  <label className="form-check-label">{category.name}</label>
+                  <label className="form-check-label">
+                    <input
+                      checked={checkCatsAndTags(checkedCats, category._id)}
+                      onChange={handleCatToggleCheckbox(category._id)}
+                      type="checkbox"
+                      className="mr-2"
+                    />
+                    {category.name}
+                  </label>
                 </li>
               ))}
           </ul>
@@ -242,13 +265,15 @@ const UpdateBlog = ({ router }) => {
             {tags &&
               tags.map((tag) => (
                 <li key={tag._id}>
-                  <input
-                    checked={checkCatsAndTags(checkedTags, tag._id)}
-                    onChange={handleTagToggleCheckbox(tag._id)}
-                    type="checkbox"
-                    className="mr-2"
-                  />
-                  <label className="form-check-label">{tag.name}</label>
+                  <label className="form-check-label">
+                    <input
+                      checked={checkCatsAndTags(checkedTags, tag._id)}
+                      onChange={handleTagToggleCheckbox(tag._id)}
+                      type="checkbox"
+                      className="mr-2"
+                    />
+                    {tag.name}
+                  </label>
                 </li>
               ))}
           </ul>
