@@ -336,3 +336,31 @@ exports.getRelatedBlogs = (req, res) => {
       res.json(blogs);
     });
 };
+
+// search blogs
+exports.blogSearch = (req, res) => {
+  // send request query by the name of search
+  const { search } = req.query;
+  // find blog based on search string
+  if (search) {
+    // find blog based on blog title / body
+    Blog.find(
+      // https://www.mongodb.com/docs/manual/reference/operator/query/or/
+      {
+        $or: [
+          // case insensitive
+          { title: { $regex: search, $options: "i" } },
+          { body: { $regex: search, $options: "i" } },
+        ],
+      },
+      (err, blogs) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler(err),
+          });
+        }
+        res.json(blogs);
+      }
+    ).select("-photo -body"); // return without body and photo
+  }
+};

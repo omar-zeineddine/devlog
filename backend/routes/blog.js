@@ -9,6 +9,7 @@ const {
   updateBlog,
   removeBlog,
   getPhoto,
+  blogSearch,
 } = require("../controllers/blog");
 const { requireSignin, adminMiddleWare } = require("../controllers/auth");
 
@@ -33,5 +34,8 @@ router.put("/blog/:slug", requireSignin, adminMiddleWare, updateBlog);
 
 // delete
 router.delete("/blog/:slug", requireSignin, adminMiddleWare, removeBlog);
+
+// search blogs
+router.get("/blogs/search", blogSearch);
 
 module.exports = router;
