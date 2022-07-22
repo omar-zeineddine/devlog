@@ -4,6 +4,7 @@ import { useState } from "react";
 import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
 import { API } from "../../config";
 import Card from "../../components/blog/Card/Card";
+import Search from "../../components/blog/Search/Search";
 
 // grab properties that are returned from initial props
 const BlogsPage = (props) => {
@@ -37,7 +38,7 @@ const BlogsPage = (props) => {
     <Layout>
       <main>
         <header>
-          <div className="container-fluid">
+          <div className="container">
             <div className="col-xl-12 pt-3">
               <h1 className="display-5 font-weight-bold text-center">
                 Recent Blogs
@@ -55,7 +56,6 @@ const BlogsPage = (props) => {
                     </a>
                   </Link>
                 ))}
-
                 {tags.map((tag) => (
                   <Link key={tag._id} href={`/tags/${tag.slug}`}>
                     <a className="btn btn-outline-dark mr-2 mt-1">{tag.name}</a>
@@ -64,6 +64,7 @@ const BlogsPage = (props) => {
               </section>
             </div>
           </div>
+          <Search />
         </header>
 
         <div className="container-fluid">
@@ -99,7 +100,10 @@ const BlogsPage = (props) => {
           {size > 0 && size >= limit && (
             <div className="row">
               <div className="col-xl-12 text-center">
-                <button onClick={loadMoreBlogs} className="btn btn-dark">
+                <button
+                  onClick={loadMoreBlogs}
+                  className="btn btn-dark infinitScroll"
+                >
                   Load More
                 </button>
               </div>

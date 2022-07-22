@@ -30,7 +30,7 @@ const BlogPage = ({ blog, query }) => {
       <Layout>
         <main>
           <article>
-            <div className="container-fluid">
+            <div className="container">
               <section>
                 <div className="row">
                   <img
@@ -51,8 +51,11 @@ const BlogPage = ({ blog, query }) => {
               <section>
                 <h1 className="py-3 text-center">{blog.title}</h1>
                 <p className="mark ml-1 py-2">
-                  Written by {blog.postedBy.name} | Published{" "}
-                  {moment(blog.updatedAt).fromNow()}
+                  Written by{" "}
+                  <Link href={`/profile/${blog.postedBy.username}`}>
+                    <a>{blog.postedBy.name}</a>
+                  </Link>{" "}
+                  | Published {moment(blog.updatedAt).fromNow()}
                 </p>
               </section>
               <section className="mb-3">

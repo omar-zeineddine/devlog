@@ -15,9 +15,13 @@ const Card = ({ blog }) => {
         </Link>
       </header>
       <section>
+        {/* <p className={`${style.markbg} `}> */}
         <p className="mark ml-1 py-2">
-          Written by {blog.postedBy.name} | Published{" "}
-          {moment(blog.updatedAt).fromNow()}
+          Written by{" "}
+          <Link href={`/profile/${blog.postedBy.username}`}>
+            <a>{blog.postedBy.name}</a>
+          </Link>{" "}
+          | Published {moment(blog.updatedAt).fromNow()}
         </p>
       </section>
       <section>
@@ -47,10 +51,20 @@ const Card = ({ blog }) => {
         </div>
         <div className="col-xl-8">
           <section>
-            <div>{renderHTML(blog.excerpt)}</div>
-            <Link href={`/blogs/${blog.slug}`}>
-              <a className="btn btn-primary mt-3">Read More</a>
-            </Link>
+            <div>
+              {renderHTML(blog.excerpt)}
+              {/* <div>{renderHTML(blog.excerpt)}</div> */}
+              {/* <Link href={`/blogs/${blog.slug}`}>
+                <a className="btn btn-primary  mt-3">Read More</a>
+              </Link> */}
+              <Link href={`/blogs/${blog.slug}`}>
+                <div className="row justify-content-center">
+                  <a type="submit" className="btn btn-primary">
+                    Read More
+                  </a>
+                </div>
+              </Link>
+            </div>
           </section>
         </div>
       </div>

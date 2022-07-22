@@ -170,7 +170,7 @@ exports.getAllBlogsCategoriesAndTags = (req, res) => {
   let blogs, categories, tags;
 
   Blog.find({})
-    .populate("categories", "_id name slug")
+    .populate("categories", "_id name username slug")
     .populate("tags", "_id name slug")
     .populate("postedBy", "_id name username profile")
     // return the latest blogs first
@@ -324,7 +324,7 @@ exports.getRelatedBlogs = (req, res) => {
   // find all blogs, excluding the current blog, based on categories of the current blog
   Blog.find({ _id: { $ne: _id }, categories: { $in: categories } })
     .limit(limit)
-    .populate("postedBy", "_id name profile")
+    .populate("postedBy", "_id name username profile")
     // selected fields
     .select("title slug excerpt postedBy createdAt updatedAt")
     .exec((err, blogs) => {
