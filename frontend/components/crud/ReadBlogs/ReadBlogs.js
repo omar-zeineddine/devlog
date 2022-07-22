@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import Router from "next/router";
 import { getCookie, isAuthenticated } from "../../../actions/auth";
 import { showAllBlogs, removeBlog } from "../../../actions/blog";
 import moment from "moment";
 
-const ReadBlogs = () => {
+const ReadBlogs = ({ username }) => {
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState();
   const token = getCookie("token");
@@ -13,7 +12,7 @@ const ReadBlogs = () => {
   const loadBlogs = async () => {
     let blogs;
     try {
-      blogs = await fetchAllBlogs();
+      blogs = await showAllBlogs(username);
       if (blogs) {
         setBlogs(blogs);
       }
