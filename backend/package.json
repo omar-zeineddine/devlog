@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "dev": "concurrently \"npm run watch\" \"cd ../frontend && npm start\"",
+    "dev": "concurrently \"npm run watch\" \"cd ../frontend && npm run dev\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -31,6 +31,6 @@
     "morgan": "^1.10.0",
     "shortid": "^2.2.16",
     "slugify": "^1.6.5",
-    "string-strip-html": "^8.3.0"
+    "string-strip-html": "^4.4.1"
   }
 }
