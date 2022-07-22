@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import Router from "next/router";
+import Swal from "sweetalert2";
 import { isAuthenticated, getCookie } from "../../../actions/auth";
 import {
   createCategory,
@@ -65,47 +64,41 @@ const Category = () => {
     });
   };
 
-  // confirm deletion
-  // pass category slug as argument
+  // swol alert confirmation
   const confirmDelete = (slug) => {
-    let answer = window.confirm(
-      "Are you sure you want to delete this category?"
-    );
-    if (answer) {
-      deleteCategory(slug, token).then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, success: false });
-        } else {
-          setValues({
-            ...values,
-            error: false,
-            success: false,
-            name: "",
-            removed: !removed,
-            reload: !reload,
-          });
-        }
-      });
-    }
+    Swal.fire({
+      title: "Are you sure you want to delete this category?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Category deleted.", "success");
+        removeCategory(slug);
+      }
+    });
   };
 
-  // alert handling
-  const showSuccess = () => {
-    if (success) {
-      return <p className="text-success">Category Added</p>;
-    }
-  };
-
-  const showError = () => {
-    if (error) {
-      return <p className="text-danger">Category Already exists</p>;
-    }
-  };
-
-  const showRemoved = () => {
-    if (error) {
-      return <p className="text-danger">Category Removed</p>;
-    }
+  // confirm deletion -> pass category slug as argument
+  const removeCategory = (slug) => {
+    // console.log('delete', slug);
+    deleteCategory(slug, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({
+          ...values,
+          error: false,
+          success: false,
+          name: "",
+          removed: !removed,
+          reload: !reload,
+        });
+      }
+    });
   };
 
   return (

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Router from "next/router";
 import { isAuthenticated, getCookie } from "../../../actions/auth";
 import { createTag, getTags, deleteTag } from "../../../actions/tag";
+import Swal from "sweetalert2";
 
 const Tag = () => {
   const [values, setValues] = useState({
@@ -59,25 +60,40 @@ const Tag = () => {
     });
   };
 
+  // swol alert confirmation
   const confirmDelete = (slug) => {
-    let answer = window.confirm("Are you sure you want to delete this tag?");
+    Swal.fire({
+      title: "Are you sure you want to delete this tag?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Tag deleted.", "success");
+        removeTag(slug);
+      }
+    });
+  };
 
-    if (answer) {
-      deleteTag(slug, token).then((data) => {
-        if (data.error) {
-          setValues({ ...values, error: data.error, success: false });
-        } else {
-          setValues({
-            ...values,
-            error: false,
-            success: false,
-            name: "",
-            removed: !removed,
-            reload: !reload,
-          });
-        }
-      });
-    }
+  const removeTag = (slug) => {
+    // console.log('delete', slug);
+    deleteTag(slug, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({
+          ...values,
+          error: false,
+          success: false,
+          name: "",
+          removed: !removed,
+          reload: !reload,
+        });
+      }
+    });
   };
 
   return (
