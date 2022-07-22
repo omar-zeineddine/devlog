@@ -1,3 +1,4 @@
+const User = require("../models/User");
 const Blog = require("../models/Blog");
 const Category = require("../models/Category");
 const Tag = require("../models/Tag");
@@ -363,4 +364,29 @@ exports.blogSearch = (req, res) => {
       }
     ).select("-photo -body"); // return without body and photo
   }
+};
+
+// get blogs of auth users
+exports.getUserBlogs = (req, res) => {
+  User.findOne({ username: req.params.username }).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+
+    Blog.find({ postedBy: user._id })
+      .populate("categories", "_id name slug")
+      .populate("tags", "_id name slug")
+      .populate("postedBy", "_id name username")
+      .select("_id title slug postedBy createdAt updatedAt")
+      .exec((err, data) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler(err),
+          });
+        }
+        res.json(data);
+      });
+  });
 };

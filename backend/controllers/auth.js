@@ -1,7 +1,9 @@
 const User = require("../models/User");
+const Blog = require("../models/Blog");
 const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
+const { errorHandler } = require("../utils/dbErrorHandler");
 
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
@@ -105,6 +107,29 @@ exports.adminMiddleWare = (req, res, next) => {
       });
     }
     req.profile = user;
+    next();
+  });
+};
+
+// auth user can update / delete own blog
+exports.canUpdateAndDeleteBlog = (req, res, next) => {
+  const slug = req.params.slug.toLowerCase();
+
+  Blog.findOne({ slug }).exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+
+    let authorizedUser =
+      data.postedBy._id.toString() === req.profile._id.toString();
+
+    if (!authorizedUser) {
+      return res.status(400).json({
+        error: "Unauthorized",
+      });
+    }
     next();
   });
 };
