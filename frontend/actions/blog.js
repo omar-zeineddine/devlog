@@ -1,9 +1,18 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
+import { isAuthenticated } from "./auth";
 import queryString from "query-string";
 
 export const createBlog = (blog, token) => {
-  return fetch(`${API}/blog`, {
+  let createBlogEndpoint;
+
+  if (isAuthenticated() && isAuthenticated().role === 1) {
+    createBlogEndpoint = `${API}/blog`;
+  } else if (isAuthenticated() && isAuthenticated().role === 0) {
+    createBlogEndpoint = `${API}/user/blog`;
+  }
+
+  return fetch(createBlogEndpoint, {
     method: "POST",
     headers: {
       Accept: "application/json",
