@@ -10,12 +10,14 @@ const {
   removeBlog,
   getPhoto,
   blogSearch,
+  getUserBlogs,
 } = require("../controllers/blog");
 
 const {
   requireSignin,
   authMiddleWare,
   adminMiddleWare,
+  canUpdateAndDeleteBlog,
 } = require("../controllers/auth");
 
 router.post("/blog", requireSignin, adminMiddleWare, createBlog);
@@ -44,8 +46,25 @@ router.delete("/blog/:slug", requireSignin, adminMiddleWare, removeBlog);
 router.get("/blogs/search", blogSearch);
 
 // authenticated user blog crud
+router.get("/:username/blogs", getUserBlogs);
 router.post("/user/blog", requireSignin, authMiddleWare, createBlog);
-router.delete("/user/blog/:slug", requireSignin, authMiddleWare, removeBlog);
-router.put("/user/blog/:slug", requireSignin, authMiddleWare, updateBlog);
+
+// delete
+router.delete(
+  "/user/blog/:slug",
+  requireSignin,
+  authMiddleWare,
+  canUpdateAndDeleteBlog,
+  removeBlog
+);
+
+// update
+router.put(
+  "/user/blog/:slug",
+  requireSignin,
+  authMiddleWare,
+  canUpdateAndDeleteBlog,
+  updateBlog
+);
 
 module.exports = router;
