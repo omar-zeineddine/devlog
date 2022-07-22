@@ -4,6 +4,8 @@ import { getCookie, isAuthenticated } from "../../../actions/auth";
 import { showAllBlogs, removeBlog } from "../../../actions/blog";
 import moment from "moment";
 
+import Swal from "sweetalert2";
+
 const ReadBlogs = ({ username }) => {
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState();
@@ -26,19 +28,32 @@ const ReadBlogs = ({ username }) => {
     // console.log("MESSAGE:", message);
   }, []);
 
-  const confirmAndDelete = async (slug) => {
-    let answer = window.confirm("Are you sure you want to delete this blog?");
-
-    if (answer) {
-      let blog;
-      try {
-        blog = await removeBlog(slug, token);
-        setMessage(blog.message);
+  const deleteBlog = (slug) => {
+    removeBlog(slug, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setMessage(data.message);
         loadBlogs();
-      } catch (error) {
-        console.error(blog.error);
       }
-    }
+    });
+  };
+
+  const confirmDelete = (slug) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        deleteBlog(slug);
+      }
+    });
   };
 
   return (
@@ -63,7 +78,7 @@ const ReadBlogs = ({ username }) => {
               </Link>
             )}
             <button
-              onClick={() => confirmAndDelete(blog.slug)}
+              onClick={() => confirmDelete(blog.slug)}
               className="btn btn-danger btn-sm card-link"
             >
               Delete
