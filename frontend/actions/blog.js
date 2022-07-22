@@ -76,8 +76,16 @@ export const showRelatedBlogs = (blog) => {
     .catch((error) => console.error(error));
 };
 
-export const showAllBlogs = () => {
-  return fetch(`${API}/blogs`, {
+export const showAllBlogs = (username) => {
+  let getBlogsEndpoint;
+
+  if (username) {
+    getBlogsEndpoint = `${API}/${username}/blogs`;
+  } else {
+    getBlogsEndpoint = `${API}/blogs`;
+  }
+
+  return fetch(getBlogsEndpoint, {
     method: "GET",
   })
     .then((response) => response.json())
@@ -85,7 +93,14 @@ export const showAllBlogs = () => {
 };
 
 export const updateBlog = (blog, token, slug) => {
-  return fetch(`${API}/blog/${slug}`, {
+  let updateBlogEndpoint;
+
+  if (isAuthenticated() && isAuthenticated().role === 1) {
+    updateBlogEndpoint = `${API}/blog/${slug}`;
+  } else if (isAuthenticated() && isAuthenticated().role === 0) {
+    updateBlogEndpoint = `${API}/user/blog/${slug}`;
+  }
+  return fetch(updateBlogEndpoint, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -98,7 +113,15 @@ export const updateBlog = (blog, token, slug) => {
 };
 
 export const removeBlog = (slug, token) => {
-  return fetch(`${API}/blog/${slug}`, {
+  let deleteBlogEndpoint;
+
+  if (isAuthenticated() && isAuthenticated().role === 1) {
+    deleteBlogEndpoint = `${API}/blog/${slug}`;
+  } else if (isAuthenticated() && isAuthenticated().role === 0) {
+    deleteBlogEndpoint = `${API}/user/blog/${slug}`;
+  }
+
+  return fetch(deleteBlogEndpoint, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
