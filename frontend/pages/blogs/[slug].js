@@ -6,6 +6,7 @@ import { showBlog, showRelatedBlogs } from "../../actions/blog";
 import renderHTML from "react-render-html";
 import moment from "moment";
 import RelatedBlogCard from "../../components/blog/RelatedBlogCard/RelatedBlogCard";
+import DisqusThread from "../../components/comment/DisqusThread";
 
 const BlogPage = ({ blog, query }) => {
   // states
@@ -94,7 +95,14 @@ const BlogPage = ({ blog, query }) => {
                   </div>
                 ))}
               </div>
-              <p>todo: show blog comments</p>
+              {/* disqus comments */}
+              <div className="container mt-5">
+                <DisqusThread
+                  id={blog._id}
+                  title={blog.title}
+                  path={`/blog/${blog.slug}`}
+                />
+              </div>
             </div>
           </article>
         </main>
