@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
-import { isAuthenticated } from "./auth";
+import { isAuthenticated, responseHandler } from "./auth";
 import queryString from "query-string";
 
 export const createBlog = (blog, token) => {
@@ -20,7 +20,10 @@ export const createBlog = (blog, token) => {
     },
     body: blog,
   })
-    .then((response) => response.json())
+    .then((response) => {
+      responseHandler(response);
+      return response.json();
+    })
     .catch((error) => console.error(error));
 };
 
@@ -108,7 +111,10 @@ export const updateBlog = (blog, token, slug) => {
     },
     body: blog,
   })
-    .then((response) => response.json())
+    .then((response) => {
+      responseHandler(response);
+      return response.json();
+    })
     .catch((error) => console.error(error));
 };
 
@@ -129,7 +135,10 @@ export const removeBlog = (slug, token) => {
       "Content-Type": "application/json",
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      responseHandler(response);
+      return response.json();
+    })
     .catch((error) => console.error(error));
 };
 

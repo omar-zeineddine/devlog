@@ -1,5 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
+import { responseHandler } from "./auth";
 
 export const createTag = (category, token) => {
   return fetch(`${API}/tag`, {
@@ -11,7 +12,10 @@ export const createTag = (category, token) => {
     },
     body: JSON.stringify(category),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      responseHandler(response);
+      return response.json();
+    })
     .catch((error) => console.error(error));
 };
 
@@ -40,6 +44,9 @@ export const deleteTag = (slug, token) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      responseHandler(response);
+      return response.json();
+    })
     .catch((error) => console.error(error));
 };

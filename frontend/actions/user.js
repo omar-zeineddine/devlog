@@ -1,5 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
+import { responseHandler } from "./auth";
 
 export const userProfile = (username) => {
   return fetch(`${API}/user/${username}`, {
@@ -38,6 +39,7 @@ export const updateProfile = (user, token) => {
     body: user,
   })
     .then((response) => {
+      responseHandler(response);
       return response.json();
     })
     .catch((err) => console.error(err));
