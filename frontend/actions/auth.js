@@ -9,7 +9,7 @@ export const responseHandler = (response) => {
     logout(() => {
       // redirect to home page in callback
       Router.push({
-        pathname: "/",
+        pathname: "/signin",
         query: {
           message: "Session has expired, Please Signin",
         },
