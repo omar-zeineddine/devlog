@@ -13,7 +13,6 @@ const Signin = ({ router }) => {
 
   return (
     <Layout>
-      <h2 className="text-center pt-4 pb-4">Login</h2>
       {/* {JSON.stringify(router)} */}
       <div className="row">
         <div className="col-md-6 offset-md-3">{showRedirectMessage()}</div>
