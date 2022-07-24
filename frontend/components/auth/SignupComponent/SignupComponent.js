@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { preSignup } from "../../../actions/auth";
+import { useState, useEffect } from "react";
+import { signup, isAuthenticated } from "../../../actions/auth";
 import styles from "./SignupComponent.module.scss";
+import FormInput from "../../FormInput/FormInput";
 const SignupComponent = () => {
   const [values, setValues] = useState({
     name: "user",
@@ -15,6 +16,11 @@ const SignupComponent = () => {
   // destructure values from state
   const { name, email, password, error, loading, message, showForm } = values;
 
+  // useEffect hook to redirect logged in users
+  useEffect(() => {
+    isAuthenticated() && Router.push("/");
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("handle submit");
@@ -22,7 +28,7 @@ const SignupComponent = () => {
     setValues({ ...values, loading: true, error: false });
     const userData = { name, email, password };
 
-    preSignup(userData).then((data) => {
+    signup(userData).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
@@ -57,41 +63,36 @@ const SignupComponent = () => {
 
   const signupForm = () => {
     return (
-      <form className={styles.signupform} onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
-            value={name}
-            onChange={handleChange("name")}
-            type="text"
-            className="form-control"
-            placeholder="Enter your username"
-          />
-        </div>
+      <section className={styles.signupForm}>
+        <div className={styles.signupForm__wrapper}>
+          <form onSubmit={handleSubmit}>
+            <FormInput
+              onChange={handleChange("name")}
+              type="text"
+              label="Name"
+              value={name}
+            />
 
-        <div className="form-group">
-          <input
-            value={email}
-            onChange={handleChange("email")}
-            type="email"
-            className="form-control"
-            placeholder="Enter your email"
-          />
-        </div>
+            <FormInput
+              onChange={handleChange("email")}
+              type="email"
+              label="Email"
+              value={email}
+            />
 
-        <div className="form-group">
-          <input
-            value={password}
-            onChange={handleChange("password")}
-            type="password"
-            className="form-control"
-            placeholder="Enter your password"
-          />
-        </div>
+            <FormInput
+              onChange={handleChange("password")}
+              type="password"
+              label="Password"
+              value={password}
+            />
 
-        <div>
-          <button className={styles.signupform__signupBtn}>signup</button>
+            <button type="submit" className={styles.signupForm__signupBtn}>
+              SIGN UP
+            </button>
+          </form>
         </div>
-      </form>
+      </section>
     );
   };
 
