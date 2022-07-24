@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Blog = require("../models/Blog");
 const formidable = require("formidable");
 const _ = require("lodash");
+const slugify = require("slugify");
 const { errorHandler } = require("../utils/dbErrorHandler");
 
 exports.read = (req, res) => {
@@ -58,6 +59,13 @@ exports.updateProfile = (req, res) => {
     }
     let user = req.profile;
     user = _.extend(user, fields);
+
+    // add password validation in case user updates password
+    if (fields.password && fields.password.length < 6) {
+      return res.status(400).json({
+        error: "Password should be minimum 6 characters long",
+      });
+    }
 
     if (files.photo) {
       if (files.photo.size > 5000000) {
