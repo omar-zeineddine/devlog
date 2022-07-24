@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { signin, authenticate, isAuthenticated } from "../../../actions/auth";
 import { useRouter } from "next/router";
 import FormInput from "../../FormInput/FormInput";
+import styles from "./SigninComponent.module.scss";
 
 const SigninComponent = () => {
   const [values, setValues] = useState({
@@ -47,31 +48,45 @@ const SigninComponent = () => {
     setValues({ ...values, error: false, [name]: e.target.value });
   };
 
+  const notify = () =>
+    toast(<h3 className="toast-error">{error}</h3>, {
+      type: toast.TYPE.ERROR,
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
+      closeButton: false,
+      hideProgressBar: true,
+    });
+
   return (
-    <section>
-      <div>
-        <h2>Sign In</h2>
-        <form onSubmit={handleSubmit}>
-          <FormInput
-            onChange={handleChange("email")}
-            type="email"
-            label="Email"
-            value={email}
-          />
+    <div className="container">
+      <section className={styles.signinForm}>
+        <div>
+          <h2 className={styles.signinForm__title}>Sign In</h2>
+          <form onSubmit={handleSubmit}>
+            <FormInput
+              onChange={handleChange("email")}
+              type="email"
+              label="Enter email"
+              value={email}
+            />
 
-          <FormInput
-            onChange={handleChange("password")}
-            type="password"
-            label="Password"
-            value={password}
-          />
+            <FormInput
+              onChange={handleChange("password")}
+              type="password"
+              label="Enter password"
+              value={password}
+            />
 
-          <button type="submit" className="btn btn-primary">
-            SIGN IN
-          </button>
-        </form>
-      </div>
-    </section>
+            <button type="submit" className={styles.signinForm__signinBtn}>
+              SIGN IN
+            </button>
+          </form>
+          <div>
+            <div className="col-lg-6 col-md-8 mx-auto"></div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
