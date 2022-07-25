@@ -9,7 +9,7 @@ exports.contactForm = (req, res) => {
   const emailData = {
     to: process.env.EMAIL_TO,
     from: req.body.email,
-    subject: `Contact form - devlog`,
+    subject: `Contact form - DevLog`,
     text: `Email received from 
         Sender name: ${name}
         Sender email: ${email}
@@ -30,4 +30,35 @@ exports.contactForm = (req, res) => {
       success: true,
     });
   });
+};
+
+// contact blog poster
+exports.contactBlogAuthorForm = (req, res) => {
+  // authorEmail: used to send to author
+  const { authorEmail, name, email, message } = req.body;
+  // send to author and admin
+  let mailList = [authorEmail, process.env.EMAIL_TO];
+
+  const emailData = {
+    to: mailList,
+    from: email,
+    subject: `Someone has messaged you from DevLog`,
+    text: `Email received from 
+        Sender name: ${name}
+        Sender email: ${email}
+        Sender message: ${message}
+    `,
+    html: `
+        <h3>Message received from ${email}</h3>
+        <h3>Name: ${name}</h3>
+        <h3>Email: ${email}</h3>
+        <div>
+          <h3>Message:</h3> 
+          <p>${message}</p>
+        </div>
+        
+        <hr/>
+    `,
+  };
+  sendgridMail.send(emailData).then((send) => res.json({ success: true }));
 };
