@@ -4,15 +4,20 @@ const shortId = require("shortid");
 const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
 const { errorHandler } = require("../utils/dbErrorHandler");
+const sendgridMail = require("@sendgrid/mail");
+sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.signup = (req, res) => {
-  User.findOne({ email: req.body.email }).exec((error, user) => {
+  const { name, email, password } = req.body;
+
+  // check if user is found in db
+  User.findOne({ email: req.body.email }).exec((err, user) => {
     if (user) {
       return res.status(400).json({
         error: "Email is taken",
       });
     }
-    const { name, email, password } = req.body;
+
     // generate unique short ids
     let username = shortId.generate();
     let profile = `${process.env.CLIENT_URL}/profile/${username}`;
@@ -131,5 +136,52 @@ exports.canUpdateAndDeleteBlog = (req, res, next) => {
       });
     }
     next();
+  });
+};
+
+// password resets
+exports.forgotPass = (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email }, (err, user) => {
+    if (err || !user) {
+      return res.status(401).json({
+        error: "User with that email does not exist",
+      });
+    }
+
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_RESET_PASS, {
+      expiresIn: "10m",
+    });
+
+    const emailData = {
+      to: email,
+      from: process.env.EMAIL_FROM,
+      subject: "Password reset link",
+      html: `
+        <h4>Please use the following link to reset your password:</h4>
+        <p>${process.env.CLIENT_URL}/auth/password/reset/${token}</p>
+        <hr/>
+        <p>This email may contain sensitive information</p>
+    `,
+    };
+
+    return user.updateOne({ resetPasswordLink: token }, (err, success) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      } else {
+        sendgridMail.send(emailData).then((sent) =>
+          res.json({
+            message: `
+              Email has been sent to ${email}. 
+              Follow the instructions to reset your password. 
+              Link expires in 10min
+              `,
+          })
+        );
+      }
+    });
   });
 };

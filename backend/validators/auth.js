@@ -16,7 +16,7 @@ exports.userSigninValidator = [
 ];
 
 // password resets validator
-exports.forgotPassdValidator = [
+exports.forgotPassValidator = [
   check("email")
     .not()
     .isEmpty()
