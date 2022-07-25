@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { emailContactForm } from "../../actions/form";
 
-const ContactForm = () => {
+const ContactForm = ({ authorEmail }) => {
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -17,8 +17,12 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setValues({ ...values, buttonText: "Sending..." });
-    let sentEmail = await emailContactForm({ name, email, message });
+    let sentEmail = await emailContactForm({
+      authorEmail,
+      name,
+      email,
+      message,
+    });
 
     if (sentEmail.success) {
       setValues({
@@ -61,8 +65,6 @@ const ContactForm = () => {
 
   return (
     <div>
-      <h2 className="mt-5 mb-4">Contact</h2>
-      <hr />
       {alertSuccess()}
       {alertError()}
       <form onSubmit={handleSubmit}>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import moment from "moment";
 import { userProfile } from "../../actions/user";
+import ContactForm from "../../components/form/ContactForm";
 
 const UserProfile = ({ user, blogs, query }) => {
   return (
@@ -40,6 +41,7 @@ const UserProfile = ({ user, blogs, query }) => {
             <div className="card">
               <div className="card-body">
                 <div className="p-3 mb-2 bg-info text-white">{`Message ${user.name}`}</div>
+                <ContactForm authorEmail={user.email} />
               </div>
             </div>
           </div>
