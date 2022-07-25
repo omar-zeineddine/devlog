@@ -8,7 +8,7 @@ exports.contactForm = (req, res) => {
 
   const emailData = {
     to: process.env.EMAIL_TO,
-    from: req.body.email,
+    from: email,
     subject: `Contact form - DevLog`,
     text: `Email received from 
         Sender name: ${name}

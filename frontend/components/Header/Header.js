@@ -6,6 +6,7 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
+  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
@@ -24,9 +25,9 @@ const Header = () => {
   return (
     <div>
       <Navbar className={styles.nav} dark expand="sm">
-        <Link href="/">
-          <NavLink className={styles.logo}>DevLog</NavLink>
-        </Link>
+        <NavbarBrand href="/" className={styles.log}>
+          DevLog
+        </NavbarBrand>
         <NavbarToggler className={styles.tog} onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
@@ -38,6 +39,11 @@ const Header = () => {
             <NavItem className={styles.navitem}>
               <Link href="/about">
                 <NavLink>About</NavLink>
+              </Link>
+            </NavItem>
+            <NavItem className={styles.navitem}>
+              <Link href="/contact">
+                <NavLink>Contact</NavLink>
               </Link>
             </NavItem>
             {isAuthenticated() ? (
