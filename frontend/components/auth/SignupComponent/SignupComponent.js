@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { signup, isAuthenticated } from "../../../actions/auth";
+import { initialSignup, isAuthenticated } from "../../../actions/auth";
 import styles from "./SignupComponent.module.scss";
 import FormInput from "../../FormInput/FormInput";
 const SignupComponent = () => {
@@ -28,7 +28,7 @@ const SignupComponent = () => {
     setValues({ ...values, loading: true, error: false });
     const userData = { name, email, password };
 
-    signup(userData).then((data) => {
+    initialSignup(userData).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
