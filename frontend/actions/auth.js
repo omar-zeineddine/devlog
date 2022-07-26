@@ -132,3 +132,30 @@ export const isAuthenticated = () => {
     }
   }
 };
+
+// password recovery
+export const forgotPass = (email) => {
+  return fetch(`${API}/forgot-pass`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(email),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.error(error));
+};
+
+export const resetPass = (resetInfo) => {
+  return fetch(`${API}/reset-pass`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resetInfo),
+  })
+    .then((response) => response.json())
+    .catch((error) => console.error(error));
+};
