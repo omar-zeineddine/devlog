@@ -25,7 +25,8 @@ router.post(
   runValidation,
   initialSignup
 );
-router.post("/signup", userSignupValidator, runValidation, signup);
+// router.post("/signup", userSignupValidator, runValidation, signup);
+router.post("/signup", signup);
 router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/logout", logout);
 router.put("/forgot-pass", forgotPassValidator, runValidation, forgotPass);

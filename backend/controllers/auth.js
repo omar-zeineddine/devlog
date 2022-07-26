@@ -56,32 +56,37 @@ exports.initialSignup = (req, res) => {
 };
 
 exports.signup = (req, res) => {
-  const { name, email, password } = req.body;
-
-  // check if user is found in db
-  User.findOne({ email: req.body.email }).exec((err, user) => {
-    if (user) {
-      return res.status(400).json({
-        error: "Email is taken",
-      });
-    }
-
-    // generate unique short ids
-    let username = shortId.generate();
-    let profile = `${process.env.CLIENT_URL}/profile/${username}`;
-
-    let newUser = new User({ name, email, password, profile, username });
-    newUser.save((err, success) => {
+  const token = req.body.token;
+  if (token) {
+    jwt.verify(token, process.env.JWT_ACTIVATE, function (err, decoded) {
       if (err) {
-        return res.status(400).json({
-          error: err,
+        return res.status(401).json({
+          error: "Expired link. Signup again",
         });
       }
-      res.json({
-        message: "User registered successfully!",
+
+      const { name, email, password } = jwt.decode(token);
+
+      let username = shortId.generate();
+      let profile = `${process.env.CLIENT_URL}/profile/${username}`;
+
+      const user = new User({ name, email, password, profile, username });
+      user.save((err, user) => {
+        if (err) {
+          return res.status(401).json({
+            error: errorHandler(err),
+          });
+        }
+        return res.json({
+          message: "Signup success! Please signin",
+        });
       });
     });
-  });
+  } else {
+    return res.json({
+      message: "Something went wrong. Try again",
+    });
+  }
 };
 
 exports.signin = (req, res) => {
