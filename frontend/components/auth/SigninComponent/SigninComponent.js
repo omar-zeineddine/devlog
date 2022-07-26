@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { signin, authenticate, isAuthenticated } from "../../../actions/auth";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import FormInput from "../../FormInput/FormInput";
 import styles from "./SigninComponent.module.scss";
 
@@ -80,10 +81,12 @@ const SigninComponent = () => {
             <button type="submit" className={styles.signinForm__signinBtn}>
               SIGN IN
             </button>
+            <div className="text-center">
+              <Link href="/auth/password/forgot">
+                <a>Forgot Password?</a>
+              </Link>
+            </div>
           </form>
-          <div>
-            <div className="col-lg-6 col-md-8 mx-auto"></div>
-          </div>
         </div>
       </section>
     </div>
