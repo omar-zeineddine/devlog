@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
+  initialSignup,
   signup,
   signin,
   logout,
@@ -18,6 +19,12 @@ const {
   resetPassValidator,
 } = require("../validators/auth");
 
+router.post(
+  "/initial-signup",
+  userSignupValidator,
+  runValidation,
+  initialSignup
+);
 router.post("/signup", userSignupValidator, runValidation, signup);
 router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/logout", logout);
