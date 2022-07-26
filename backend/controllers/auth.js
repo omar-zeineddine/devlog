@@ -8,6 +8,53 @@ const { errorHandler } = require("../utils/dbErrorHandler");
 const sendgridMail = require("@sendgrid/mail");
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// new user - account activation
+// before creating new user
+// embed signup info (name, email, pass) in json token -> send to user email
+// save user info when activation link is clicked - (useful for spam prevention)
+
+exports.initialSignup = (req, res) => {
+  const { name, email, password } = req.body; // same fields used for signup
+
+  // check if email already exists in database
+  User.findOne({ email: email.toLowerCase() }, (err, user) => {
+    if (user) {
+      return res.status(400).json({
+        error: "Email is taken",
+      });
+    }
+    // send token with info to user email
+    const token = jwt.sign(
+      { name, email, password },
+      process.env.JWT_ACTIVATE,
+      {
+        expiresIn: "10m",
+      }
+    );
+
+    // email token to user
+    const emailData = {
+      to: email,
+      from: process.env.EMAIL_FROM,
+      subject: "Devlog - New Account Activation",
+      html: `
+        <h4>Please use the following link to activate your account:</h4>
+        <p>${process.env.CLIENT_URL}/auth/account/activate/${token}</p>
+        <hr/>
+        <p>This email may contain sensitive information</p>
+    `,
+    };
+
+    sendgridMail.send(emailData).then((sent) => {
+      return res.json({
+        message: `
+        Email has been sent to ${email}. 
+        Follow instructions to activate your account.`,
+      });
+    });
+  });
+};
+
 exports.signup = (req, res) => {
   const { name, email, password } = req.body;
 
