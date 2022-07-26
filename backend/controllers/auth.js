@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Blog = require("../models/Blog");
 const shortId = require("shortid");
+const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
 const { errorHandler } = require("../utils/dbErrorHandler");
@@ -176,12 +177,59 @@ exports.forgotPass = (req, res) => {
           res.json({
             message: `
               Email has been sent to ${email}. 
-              Follow the instructions to reset your password. 
-              Link expires in 10min
+              Follow password reset instructions. 
               `,
           })
         );
       }
     });
   });
+};
+
+exports.resetPass = (req, res) => {
+  const { resetPasswordLink, newPassword } = req.body;
+  // check reset password link
+  if (resetPasswordLink) {
+    jwt.verify(
+      // check token expiration (10 minutes)
+      resetPasswordLink,
+      process.env.JWT_RESET_PASS,
+      (err, decoded) => {
+        if (err) {
+          return res.status(401).json({
+            error: "Expired link. Try again",
+          });
+        }
+        // find the user based on reset password link
+        User.findOne({ resetPasswordLink }, (err, user) => {
+          if (err || !user) {
+            return res.status(401).json({
+              error: "Something went wrong. Try later",
+            });
+          }
+          // update user fields with new info
+          const updatedFields = {
+            password: newPassword,
+            resetPasswordLink: "",
+          };
+
+          // update fields that have changed with lodash
+          user = _.extend(user, updatedFields);
+
+          // save updated user info
+          user.save((err, result) => {
+            if (err) {
+              return res.status(401).json({
+                error: errorHandler(err),
+              });
+            }
+
+            res.json({
+              message: `Password has been updated`,
+            });
+          });
+        });
+      }
+    );
+  }
 };

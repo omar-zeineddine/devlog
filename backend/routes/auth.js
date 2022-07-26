@@ -6,6 +6,7 @@ const {
   logout,
   requireSignin,
   forgotPass,
+  resetPass,
 } = require("../controllers/auth");
 
 // validators
@@ -14,12 +15,14 @@ const {
   userSignupValidator,
   userSigninValidator,
   forgotPassValidator,
+  resetPassValidator,
 } = require("../validators/auth");
 
 router.post("/signup", userSignupValidator, runValidation, signup);
 router.post("/signin", userSigninValidator, runValidation, signin);
 router.get("/logout", logout);
 router.put("/forgot-pass", forgotPassValidator, runValidation, forgotPass);
+router.put("/reset-pass", resetPassValidator, runValidation, resetPass);
 
 // test middleware for logged in user
 router.get("/secret", requireSignin, (req, res) => {
