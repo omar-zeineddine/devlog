@@ -14,7 +14,7 @@
 }
 
 :root {
-  --primaryColor:  #232e52;
+  --mainColor:  #232e52;
 }
 
 html,
@@ -23,11 +23,19 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-    background-color: #f1f1f1;
+  // background-color: #e7e7e7;
+  background-color: #d7d7d7;
 }
 
 img {
   max-width: 100%;
+  object-fit: cover;
+}
+
+.container {
+  max-width: 1200px;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .navbar-toggler {
@@ -117,4 +125,11 @@ img {
 .themeSwitcher {
   margin-top: 0.5em;
   font-size: small;
-} 
+}
+
+// temp workaround to fix quill double toolbar when React strict mode is enabled
+// https://github.com/zenoamaro/react-quill/issues/784#issuecomment-1130550582
+.quill > .ql-toolbar:first-child {
+  display: none !important;
+}
+
