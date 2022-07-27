@@ -24,32 +24,32 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar className={styles.nav} dark expand="sm">
-        <NavbarBrand href="/" className={styles.log}>
-          DevLog
+      <Navbar className={styles.nav} expand="sm" dark>
+        <NavbarBrand href="/" className={styles.logo}>
+          Devlog
         </NavbarBrand>
         <NavbarToggler className={styles.tog} onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem className={styles.navitem}>
+            <NavItem className={styles.navItem}>
               <Link href="/blogs">
-                <NavLink>Blogs</NavLink>
+                <NavLink className={styles.navLink}>Blogs</NavLink>
               </Link>
             </NavItem>
-            <NavItem className={styles.navitem}>
+            <NavItem className={styles.navItem}>
               <Link href="/about">
-                <NavLink>About</NavLink>
+                <NavLink className={styles.navLink}>About</NavLink>
               </Link>
             </NavItem>
-            <NavItem className={styles.navitem}>
+            <NavItem className={styles.navItem}>
               <Link href="/contact">
-                <NavLink>Contact</NavLink>
+                <NavLink className={styles.navLink}>Contact</NavLink>
               </Link>
             </NavItem>
             {isAuthenticated() ? (
               <>
                 {isAuthenticated().role === 1 ? (
-                  <NavItem className={styles.navitem}>
+                  <NavItem className={styles.navItem}>
                     <Link href="/admin">
                       <NavLink>{`${
                         isAuthenticated().name
@@ -57,7 +57,7 @@ const Header = () => {
                     </Link>
                   </NavItem>
                 ) : (
-                  <NavItem className={styles.navitem}>
+                  <NavItem className={styles.navItem}>
                     <Link href="/user">
                       <NavLink>{`${
                         isAuthenticated().name
@@ -65,7 +65,7 @@ const Header = () => {
                     </Link>
                   </NavItem>
                 )}
-                <NavItem className={styles.navitem}>
+                <NavItem className={styles.navItem}>
                   <Link href="/signin">
                     <NavLink
                       onClick={() => logout(() => Router.replace("/signin"))}
@@ -77,14 +77,14 @@ const Header = () => {
               </>
             ) : (
               <>
-                <NavItem className={styles.navitem}>
+                <NavItem className={styles.navItem}>
                   <Link href="/signin">
-                    <NavLink>Signin</NavLink>
+                    <NavLink className={styles.navLink}>Signin</NavLink>
                   </Link>
                 </NavItem>
-                <NavItem className={styles.navitem}>
+                <NavItem className={styles.navItem}>
                   <Link href="/signup">
-                    <NavLink>Signup</NavLink>
+                    <NavLink className={styles.signupBtn}>Signup</NavLink>
                   </Link>
                 </NavItem>
               </>
