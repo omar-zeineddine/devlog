@@ -100,9 +100,11 @@ const SignupComponent = () => {
 
   return (
     <>
-      {showError()}
-      {showLoading()}
-      {showMessage()}
+      <div className={styles.signupForm__messages}>
+        {showError()}
+        {showLoading()}
+        {showMessage()}
+      </div>
       {showForm && signupForm()}
     </>
   );
