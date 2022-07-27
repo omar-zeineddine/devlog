@@ -42,6 +42,23 @@ img {
   border: none;
 }
 
+textarea:hover,
+textarea:active,
+input:not([type='checkbox']):hover,
+input:not([type='checkbox']):focus,
+input:not([type='checkbox']):active,
+textarea:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
 /* ===============
       Nprogress
    =============== */
@@ -133,3 +150,23 @@ img {
   display: none !important;
 }
 
+/* ===============
+      Buttons
+   =============== */
+
+.btn-primary {
+  background-color: #232e52;
+  font-weight: bold;
+  border: 0px;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+  border: 0px;
+  background-color: #fff !important;
+  color: #232e52 !important;
+  font-weight: bold;
+  outline: 0px !important;
+  box-shadow: none;
+  opacity: .9;
+}
