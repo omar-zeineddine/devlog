@@ -4,9 +4,9 @@ import styles from "./SignupComponent.module.scss";
 import FormInput from "../../FormInput/FormInput";
 const SignupComponent = () => {
   const [values, setValues] = useState({
-    name: "user",
-    email: "user@user.com",
-    password: "123456",
+    name: "",
+    email: "",
+    password: "",
     error: "",
     loading: false,
     message: "",
@@ -64,7 +64,9 @@ const SignupComponent = () => {
   const signupForm = () => {
     return (
       <section className={styles.signupForm}>
-        <div className={styles.signupForm__wrapper}>
+        <div>
+          <h2 className={styles.signupForm__title}>Register</h2>
+
           <form onSubmit={handleSubmit}>
             <FormInput
               onChange={handleChange("name")}
