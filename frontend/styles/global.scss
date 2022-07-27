@@ -13,9 +13,29 @@
   outline: none;
 }
 
+h1, h2, h3, h4 {
+  margin: 0;
+  color: var(--mainColor);
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+h2:hover {
+  text-decoration: none !important;
+}
+
+a:hover {
+  
+  text-decoration: none !important;
+}
+
+
 :root {
   --mainColor:  #232e52;
 }
+
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,900&display=swap");
 
 html,
 body {
@@ -23,8 +43,11 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-  // background-color: #e7e7e7;
-  background-color: #d7d7d7;
+  background-color: #fff;
+  background-color: darkgray;
+  background-color: #fff;
+  background-color: #f5f5f5;
+  font-family: "Nunito", sans-serif;
 }
 
 img {
@@ -171,6 +194,43 @@ label:focus,
   opacity: .9;
 }
 
+.btn-outline-primary {
+  background-color: #fff !important;
+  color: #232e52 !important;
+  font-weight: bold;
+  border: 0px;
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary:hover {
+  border: 0px;
+  background-color: #232e52 !important;
+  color: white !important;
+  font-weight: bold;
+  outline: 0px !important;
+  box-shadow: none;
+  opacity: .9;
+}
+
+.btn-outline-gray:focus,
+.btn-outline-gray:hover {
+  border: 0px;
+  background-color: gray !important;
+  color: white !important;
+  font-weight: bold;
+  outline: 0px !important;
+  box-shadow: none;
+  opacity: .9;
+}
+  
+
+
+.infiniteScroll{
+  margin: 2em 0;
+  font-weight: bold;
+}
+
+
 /* ===============
        Card
    =============== */
@@ -264,5 +324,32 @@ label:focus,
     0.625rem 0.625rem rgba(0, 0, 0, 0.04), 16px 16px rgba(0, 0, 0, 0.04),
     17px 17px rgba(0, 0, 0, 0.04), 18px 18px rgba(0, 0, 0, 0.04),
     19px 19px rgba(0, 0, 0, 0.04), 1.25rem 1.25rem rgba(0, 0, 0, 0.04);
+}
+
+
+.bg-gray {
+  background-color: gray;
+  a {
+    color: white;
+    font-weight: bold;
+    padding: .2em;
+  }
+  a:hover {
+    color: white;
+    text-decoration: underline !important;
+  }
+}
+
+.bg-main {
+  background-color: var(--mainColor);
+  a {
+    color: white;
+    font-weight: bold;
+    padding: .2em;
+  }
+  a:hover {
+    color: white;
+    text-decoration: underline !important;
+  }
 }
 
