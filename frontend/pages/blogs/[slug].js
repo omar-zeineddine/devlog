@@ -31,13 +31,13 @@ const BlogPage = ({ blog, query }) => {
       <Layout>
         <main>
           <article>
-            <div className="container">
+            <div>
               <section>
-                <div className="row">
+                <div>
                   <img
                     src={`${API}/blog/photo/${blog.slug}`}
                     alt={blog.title}
-                    className="img img-fluid featured-image"
+                    className="img img-fluid px-0"
                     style={{
                       width: "100%",
                       height: "60vh",
@@ -48,10 +48,10 @@ const BlogPage = ({ blog, query }) => {
               </section>
             </div>
 
-            <div className="container">
+            <div>
               <section>
-                <h1 className="py-3 text-center">{blog.title}</h1>
-                <p className="mark ml-1 py-2">
+                <h1 className="py-3 text-left">{blog.title}</h1>
+                <p className="bg-gray ml-1 py-2 px-0 d-inline-block">
                   Written by{" "}
                   <Link href={`/profile/${blog.postedBy.username}`}>
                     <a>{blog.postedBy.name}</a>
@@ -85,8 +85,8 @@ const BlogPage = ({ blog, query }) => {
               </section>
             </div>
 
-            <div className="container mt-5">
-              <h4 className="text-center">Related Blogs</h4>
+            <div className=" mt-5">
+              <h4 className="text-left">Related Blogs</h4>
               <hr />
               <div className="row">
                 {relatedBlogs.map((blog) => (
@@ -96,7 +96,7 @@ const BlogPage = ({ blog, query }) => {
                 ))}
               </div>
               {/* disqus comments */}
-              <div className="container mt-5">
+              <div className="mt-5">
                 <DisqusThread
                   id={blog._id}
                   title={blog.title}
