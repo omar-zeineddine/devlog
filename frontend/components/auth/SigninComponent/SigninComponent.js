@@ -7,8 +7,8 @@ import styles from "./SigninComponent.module.scss";
 
 const SigninComponent = () => {
   const [values, setValues] = useState({
-    email: "user@user.com",
-    password: "123456",
+    email: "",
+    password: "",
     error: "",
     loading: false,
     message: "",
@@ -83,7 +83,7 @@ const SigninComponent = () => {
             </button>
             <div className="text-center">
               <Link href="/auth/password/forgot">
-                <a>Forgot Password?</a>
+                <a className={styles.forgotPass}>Forgot Password?</a>
               </Link>
             </div>
           </form>
