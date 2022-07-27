@@ -9,7 +9,7 @@
 
   &__title {
     margin-bottom: 3rem;
-    font-size: 4rem;
+    font-size: 3rem;
     text-align: center;
   }
 
@@ -20,9 +20,26 @@
     border-radius: .8rem;
     width: 100%;
     padding: 1rem 2.2rem;
+    background-color: var(--mainColor);
+    color: #fff;
 
     &:hover {
       cursor: pointer;
+    background-color: var(--primaryColor);
+      background-color: var(--secondaryColor);
+    }
+  }
+  
+  .forgotPass {
+    font-size: 1.1rem;
+    color: #293462;
+    
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      text-decoration: underline !important;
+      font-weight: bold;
+      opacity: .8;
     }
   }
 }
