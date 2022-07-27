@@ -5,6 +5,7 @@ import { listBlogsWithCategoriesAndTags } from "../../actions/blog";
 import { API } from "../../config";
 import Card from "../../components/blog/Card/Card";
 import Search from "../../components/blog/Search/Search";
+import styles from "./blogs.module.scss";
 
 // grab properties that are returned from initial props
 const BlogsPage = (props) => {
@@ -58,7 +59,14 @@ const BlogsPage = (props) => {
                 ))}
                 {tags.map((tag) => (
                   <Link key={tag._id} href={`/tags/${tag.slug}`}>
-                    <a className="btn btn-outline-dark mr-2 mt-1">{tag.name}</a>
+                    <a className="btn btn-outline-dark mr-2 mt-1">
+                      <img
+                        className={styles.tagIcon}
+                        src="assets/icons/tag.svg"
+                        alt="tag icon"
+                      />
+                      {tag.name}
+                    </a>
                   </Link>
                 ))}
               </section>
@@ -67,7 +75,7 @@ const BlogsPage = (props) => {
           <Search />
         </header>
 
-        <div className="container-fluid">
+        <div className="container">
           <div className="row">
             <div className="col-xl-12">
               {/* loop over blogs and index*/}
@@ -102,7 +110,7 @@ const BlogsPage = (props) => {
               <div className="col-xl-12 text-center">
                 <button
                   onClick={loadMoreBlogs}
-                  className="btn btn-dark infinitScroll"
+                  className="btn btn-dark infiniteScroll"
                 >
                   Load More
                 </button>
