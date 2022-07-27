@@ -1,0 +1,16 @@
+.loadMore {
+  grid-column: center-start / center-end;
+  margin-top: 3rem;
+
+  &Btn {
+    margin-right: auto;
+    border-radius: .8rem;
+    padding: 1rem 2rem;
+    width: 100%;
+
+    &:hover {
+      cursor: pointer;
+      opacity: .9;
+    }
+  }
+} 
