@@ -26,7 +26,7 @@ const UserProfile = ({ user, blogs, query }) => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
-                <div className="p-3 mb-2 bg-info text-white">{`Latest blogs by ${user.name}`}</div>
+                <div className="p-3 mb-2 bg-main text-white">{`Latest blogs by ${user.name}`}</div>
                 {blogs.map((blog, idx) => (
                   <div className="py-2" key={idx}>
                     <Link href={`/blogs/${blog.slug}`}>
@@ -40,7 +40,7 @@ const UserProfile = ({ user, blogs, query }) => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
-                <div className="p-3 mb-2 bg-info text-white">{`Message ${user.name}`}</div>
+                <div className="p-3 mb-2 bg-main text-white">{`Message ${user.name}`}</div>
                 <ContactForm authorEmail={user.email} />
               </div>
             </div>
