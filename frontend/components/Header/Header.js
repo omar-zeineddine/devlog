@@ -24,73 +24,75 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar className={styles.nav} expand="sm" dark>
-        <NavbarBrand href="/" className={styles.logo}>
-          Devlog
-        </NavbarBrand>
-        <NavbarToggler className={styles.tog} onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem className={styles.navItem}>
-              <Link href="/blogs">
-                <NavLink className={styles.navLink}>Blogs</NavLink>
-              </Link>
-            </NavItem>
-            <NavItem className={styles.navItem}>
-              <Link href="/about">
-                <NavLink className={styles.navLink}>About</NavLink>
-              </Link>
-            </NavItem>
-            <NavItem className={styles.navItem}>
-              <Link href="/contact">
-                <NavLink className={styles.navLink}>Contact</NavLink>
-              </Link>
-            </NavItem>
-            {isAuthenticated() ? (
-              <>
-                {isAuthenticated().role === 1 ? (
+      <Navbar className={`${styles.nav}`} expand="sm" dark>
+        <div className="container">
+          <NavbarBrand href="/" className={styles.logo}>
+            Devlog
+          </NavbarBrand>
+          <NavbarToggler className={styles.tog} onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem className={styles.navItem}>
+                <Link href="/blogs">
+                  <NavLink className={styles.navLink}>Blogs</NavLink>
+                </Link>
+              </NavItem>
+              <NavItem className={styles.navItem}>
+                <Link href="/about">
+                  <NavLink className={styles.navLink}>About</NavLink>
+                </Link>
+              </NavItem>
+              <NavItem className={styles.navItem}>
+                <Link href="/contact">
+                  <NavLink className={styles.navLink}>Contact</NavLink>
+                </Link>
+              </NavItem>
+              {isAuthenticated() ? (
+                <>
+                  {isAuthenticated().role === 1 ? (
+                    <NavItem className={styles.navItem}>
+                      <Link href="/admin">
+                        <NavLink>{`${
+                          isAuthenticated().name
+                        }'s Dashboard`}</NavLink>
+                      </Link>
+                    </NavItem>
+                  ) : (
+                    <NavItem className={styles.navItem}>
+                      <Link href="/user">
+                        <NavLink>{`${
+                          isAuthenticated().name
+                        }'s Dashboard`}</NavLink>
+                      </Link>
+                    </NavItem>
+                  )}
                   <NavItem className={styles.navItem}>
-                    <Link href="/admin">
-                      <NavLink>{`${
-                        isAuthenticated().name
-                      }'s Dashboard`}</NavLink>
+                    <Link href="/signin">
+                      <NavLink
+                        onClick={() => logout(() => Router.replace("/signin"))}
+                      >
+                        Logout
+                      </NavLink>
                     </Link>
                   </NavItem>
-                ) : (
+                </>
+              ) : (
+                <>
                   <NavItem className={styles.navItem}>
-                    <Link href="/user">
-                      <NavLink>{`${
-                        isAuthenticated().name
-                      }'s Dashboard`}</NavLink>
+                    <Link href="/signin">
+                      <NavLink className={styles.navLink}>Signin</NavLink>
                     </Link>
                   </NavItem>
-                )}
-                <NavItem className={styles.navItem}>
-                  <Link href="/signin">
-                    <NavLink
-                      onClick={() => logout(() => Router.replace("/signin"))}
-                    >
-                      Logout
-                    </NavLink>
-                  </Link>
-                </NavItem>
-              </>
-            ) : (
-              <>
-                <NavItem className={styles.navItem}>
-                  <Link href="/signin">
-                    <NavLink className={styles.navLink}>Signin</NavLink>
-                  </Link>
-                </NavItem>
-                <NavItem className={styles.navItem}>
-                  <Link href="/signup">
-                    <NavLink className={styles.signupBtn}>Signup</NavLink>
-                  </Link>
-                </NavItem>
-              </>
-            )}
-          </Nav>
-        </Collapse>
+                  <NavItem className={styles.navItem}>
+                    <Link href="/signup">
+                      <NavLink className={styles.signupBtn}>Signup</NavLink>
+                    </Link>
+                  </NavItem>
+                </>
+              )}
+            </Nav>
+          </Collapse>
+        </div>
       </Navbar>
     </div>
   );
