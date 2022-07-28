@@ -1,11 +1,11 @@
-import Header from "./Header/Header";
+import dynamic from "next/dynamic";
+const Header = dynamic(() => import("./Header/Header"), { ssr: false });
 
 const Layout = ({ children }) => {
   return (
     <div>
       <Header />
-      {children}
-      <p>footer</p>
+      <div className="container">{children}</div>
     </div>
   );
 };
