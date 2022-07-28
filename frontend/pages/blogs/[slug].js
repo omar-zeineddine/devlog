@@ -95,17 +95,16 @@ const BlogPage = ({ blog, query }) => {
                   </div>
                 ))}
               </div>
-              {/* disqus comments */}
-              <div className="mt-5">
-                <DisqusThread
-                  id={blog._id}
-                  title={blog.title}
-                  path={`/blog/${blog.slug}`}
-                />
-              </div>
             </div>
           </article>
         </main>
+        <div className="mt-5">
+          <DisqusThread
+            id={blog._id}
+            title={blog.title}
+            path={`/blog/${blog.slug}`}
+          />
+        </div>
       </Layout>
     </>
   );

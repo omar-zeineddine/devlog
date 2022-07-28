@@ -6,6 +6,7 @@ import { API } from "../../config";
 import Card from "../../components/blog/Card/Card";
 import Search from "../../components/blog/Search/Search";
 import styles from "./blogs.module.scss";
+import Footer from "../../components/Footer/Footer";
 
 // grab properties that are returned from initial props
 const BlogsPage = (props) => {
@@ -39,7 +40,7 @@ const BlogsPage = (props) => {
     <Layout>
       <main>
         <header>
-          <div className="container">
+          <div>
             <div className="col-xl-12 pt-3">
               <h1 className="display-5 font-weight-bold text-center">
                 Recent Blogs
@@ -52,14 +53,12 @@ const BlogsPage = (props) => {
                     key={category._id}
                     href={`/categories/${category.slug}`}
                   >
-                    <a className="btn btn-outline-info mr-2 mt-1">
-                      {category.name}
-                    </a>
+                    <a className="btn btn-primary mr-2 mt-1">{category.name}</a>
                   </Link>
                 ))}
                 {tags.map((tag) => (
                   <Link key={tag._id} href={`/tags/${tag.slug}`}>
-                    <a className="btn btn-outline-dark mr-2 mt-1">
+                    <a className="btn btn-outline-primary mr-2 mt-1">
                       <img
                         className={styles.tagIcon}
                         src="assets/icons/tag.svg"
@@ -75,7 +74,7 @@ const BlogsPage = (props) => {
           <Search />
         </header>
 
-        <div className="container">
+        <div>
           <div className="row">
             <div className="col-xl-12">
               {/* loop over blogs and index*/}
@@ -90,7 +89,7 @@ const BlogsPage = (props) => {
             </div>
           </div>
         </div>
-        <div className="container">
+        <div>
           <div className="row">
             <div className="col-xl-12">
               {loadedBlogs &&
@@ -103,7 +102,7 @@ const BlogsPage = (props) => {
             </div>
           </div>
         </div>
-        <div className="container">
+        <div>
           {/* if size greater than 0 and size is greater than or equal to limit, show button */}
           {size > 0 && size >= limit && (
             <div className="row">
@@ -119,11 +118,10 @@ const BlogsPage = (props) => {
           )}
         </div>
       </main>
+      <Footer />
     </Layout>
   );
 };
-
-// to use get initial props (SSR - page)
 
 // get initial props can be used only on pages not components
 BlogsPage.getInitialProps = () => {
