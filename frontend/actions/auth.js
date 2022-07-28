@@ -52,7 +52,7 @@ export const signin = (user) => {
 
 export const logout = (next) => {
   removeCookie("token");
-  removeLocalStorage("token");
+  removeLocalStorage("user");
   next();
 
   return fetch(`${API}/logout`, {
@@ -129,6 +129,18 @@ export const isAuthenticated = () => {
       } else {
         return false;
       }
+    }
+  }
+};
+
+// use typeof window instead of deprecated process.browser
+export const updateUser = (user, next) => {
+  if (typeof window === "undefined") {
+    if (localStorage.getItem("user")) {
+      let auth = JSON.parse(localStorage.getItem("user"));
+      auth = user;
+      localStorage.setItem("user", JSON.stringify(auth));
+      next();
     }
   }
 };
