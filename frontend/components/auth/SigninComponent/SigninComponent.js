@@ -15,7 +15,7 @@ const SigninComponent = () => {
     showForm: true,
   });
 
-  const { email, password, error, loading } = values;
+  const { email, password, error, message, loading } = values;
   const router = useRouter();
 
   useEffect(() => {
@@ -49,20 +49,23 @@ const SigninComponent = () => {
     setValues({ ...values, error: false, [name]: e.target.value });
   };
 
-  const notify = () =>
-    toast(<h3 className="toast-error">{error}</h3>, {
-      type: toast.TYPE.ERROR,
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 5000,
-      closeButton: false,
-      hideProgressBar: true,
-    });
+  const showLoading = () =>
+    loading ? <div className="alert alert-info">Loading...</div> : "";
+  const showError = () =>
+    error ? <div className="alert alert-danger">{error}</div> : "";
+  const showMessage = () =>
+    message ? <div className="alert alert-info">{message}</div> : "";
 
   return (
     <div className="container">
-      <section className={styles.signinForm}>
+      <div className="pt-4 pb-0">
+        {showError()}
+        {showLoading()}
+        {showMessage()}
+      </div>
+      <section className={`${styles.signinForm} my-0`}>
         <div>
-          <h2 className={styles.signinForm__title}>Sign In</h2>
+          <h2 className={`${styles.signinForm__title} mt-0`}>Sign In</h2>
           <form onSubmit={handleSubmit}>
             <FormInput
               onChange={handleChange("email")}
