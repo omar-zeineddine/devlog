@@ -33,6 +33,7 @@ a:hover {
 
 :root {
   --mainColor:  #232e52;
+  --secondaryColor: gray;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,900&display=swap");
@@ -212,6 +213,18 @@ label:focus,
   opacity: .9;
 }
 
+.btn-outline-gray,
+.btn-outline-gray{
+  border: 0px;
+  background-color: #232e52 !important;
+  color: white !important;
+  font-weight: bold;
+  outline: 0px !important;
+  box-shadow: none;
+  opacity: .9;
+}
+
+
 .btn-outline-gray:focus,
 .btn-outline-gray:hover {
   border: 0px;
@@ -223,11 +236,35 @@ label:focus,
   opacity: .9;
 }
   
+// fix left margin alignment of lists inside blog div
+ol,
+ul {margin-left: 1em;}
 
+// marked text
+.bg-gray {
+  background-color: gray;
+  a {
+    color: white;
+    font-weight: bold;
+    padding: .2em;
+  }
+  a:hover {
+    color: white;
+    text-decoration: underline !important;
+  }
+}
 
-.infiniteScroll{
-  margin: 2em 0;
-  font-weight: bold;
+.bg-main {
+  background-color: var(--mainColor);
+  a {
+    color: white;
+    font-weight: bold;
+    padding: .2em;
+  }
+  a:hover {
+    color: white;
+    text-decoration: underline !important;
+  }
 }
 
 
@@ -327,29 +364,4 @@ label:focus,
 }
 
 
-.bg-gray {
-  background-color: gray;
-  a {
-    color: white;
-    font-weight: bold;
-    padding: .2em;
-  }
-  a:hover {
-    color: white;
-    text-decoration: underline !important;
-  }
-}
-
-.bg-main {
-  background-color: var(--mainColor);
-  a {
-    color: white;
-    font-weight: bold;
-    padding: .2em;
-  }
-  a:hover {
-    color: white;
-    text-decoration: underline !important;
-  }
-}
 
