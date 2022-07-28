@@ -52,7 +52,7 @@ const Header = () => {
                   {isAuthenticated().role === 1 ? (
                     <NavItem className={styles.navItem}>
                       <Link href="/admin">
-                        <NavLink>{`${
+                        <NavLink className={styles.navLink}>{`${
                           isAuthenticated().name
                         }'s Dashboard`}</NavLink>
                       </Link>
@@ -60,7 +60,7 @@ const Header = () => {
                   ) : (
                     <NavItem className={styles.navItem}>
                       <Link href="/user">
-                        <NavLink>{`${
+                        <NavLink className={styles.navLink}>{`${
                           isAuthenticated().name
                         }'s Dashboard`}</NavLink>
                       </Link>
@@ -69,6 +69,7 @@ const Header = () => {
                   <NavItem className={styles.navItem}>
                     <Link href="/signin">
                       <NavLink
+                        className={styles.navLink}
                         onClick={() => logout(() => Router.replace("/signin"))}
                       >
                         Logout

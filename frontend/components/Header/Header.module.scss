@@ -1,6 +1,6 @@
 .nav {
   background-color: #232e52;
-  padding: 2em 0;
+  padding: 1.5em 0;
 }
 
 .logo {
@@ -8,6 +8,7 @@
   color: #fff;
   // font-size: 3rem;
   padding: 1.1em 0;
+  margin-left: 0;
 }
 
 .navItem {
@@ -15,23 +16,26 @@
   font-weight: bold;
   color: #fff;
   cursor: pointer;
+
+  &:active,
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .logo:hover,
 .navItem:hover {
-
   color: #fff;
   opacity: 0.8;
   cursor: pointer;
 }
 
-
 .navLink {
-  color:white !important;
+  color: white !important;
 }
 
-.navLink:hover{
-  opacity: .8;
+.navLink:hover {
+  opacity: 0.8;
 }
 
 @media screen and (min-width: 610px) {
@@ -39,25 +43,23 @@
     margin-left: 1em;
   }
 
-.signupBtn {
-  font-weight: bold;
-  border: 2px solid white;
-  border-radius: 4px;
-  color:white !important;
-}
+  .signupBtn {
+    font-weight: bold;
+    border: 2px solid white;
+    border-radius: 4px;
+    color: white !important;
 
-.signupBtn:hover,
-.signupBtn:active{
-  font-weight: bold;
-  border: 2px solid white;
-  border-radius: 4px;
-  color: #232e52 !important;
-  background-color: white !important;
-}
-
+    &:hover,
+    :active {
+      font-weight: bold;
+      border: 2px solid white;
+      border-radius: 4px;
+      color: #232e52 !important;
+      background-color: #fff !important;
+    }
+  }
 }
 
 .tog {
   border-color: #fff !important;
 }
-
