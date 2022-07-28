@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getCookie, updateUser } from "../../../actions/auth";
 import { getProfile, updateProfile } from "../../../actions/user";
 import { API } from "../../../config";
+import Router from "next/router";
 
 const ProfileUpdate = () => {
   const [values, setValues] = useState({
@@ -86,6 +87,7 @@ const ProfileUpdate = () => {
             loading: false,
           });
         });
+        Router.reload(window.location.pathname);
       }
     } catch (error) {
       setValues({
@@ -97,81 +99,91 @@ const ProfileUpdate = () => {
       console.error(updatedUser.error);
     }
   };
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
 
   return (
     <>
-      <div className="col-xl-4 pr-5 pt-5">
-        <img
-          className="img img-fluid img-thumbnail"
-          src={`${API}/user/photo/${username}`}
-          alt="user profile"
-        />
-
-        <div className="form-group mt-2">
-          <label htmFor="photo" className="btn btn-outline-info btn-block">
-            Profile Photo
-            <input
-              onChange={handleChange("photo")}
-              type="file"
-              accept="image/*"
-              id="photo"
-              hidden
-            />
-          </label>
+      <div className="row">
+        <div className="col-md-6 pt-5">
+          {/* fetch user image */}
+          <img
+            className="img img-fluid img-thumbnail"
+            src={`${API}/user/photo/${username}`}
+            alt="user profile"
+          />
+          <div className="form-group mt-2">
+            <label htmFor="photo" className="btn btn-primary btn-block">
+              Profile Photo
+              <input
+                onChange={handleChange("photo")}
+                type="file"
+                accept="image/*"
+                id="photo"
+                hidden
+              />
+            </label>
+          </div>
         </div>
-      </div>
-      <div className="col-xl-8 mt-5">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="text-muted">Username</label>
-            <input
-              onChange={handleChange("username")}
-              type="text"
-              value={username}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label className="text-muted">Name</label>
-            <input
-              onChange={handleChange("name")}
-              type="text"
-              value={name}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label className="text-muted">Email</label>
-            <input
-              onChange={handleChange("email")}
-              type="email"
-              value={email}
-              className="form-control"
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="text-muted">About</label>
-            <textarea
-              onChange={handleChange("about")}
-              type="about"
-              value={about}
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label className="text-muted">Password</label>
-            <input
-              onChange={handleChange("password")}
-              type="password"
-              value={password}
-              className="form-control"
-            />
-          </div>
-          <button type="submit" className="btn btn-outline-dark btn-block">
-            Update Profile
-          </button>
-        </form>
+        <div className="col-md-6 pt-5">
+          {showError()}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label className="text-muted">Username</label>
+              <input
+                onChange={handleChange("username")}
+                type="text"
+                value={username}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label className="text-muted">Name</label>
+              <input
+                onChange={handleChange("name")}
+                type="text"
+                value={name}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label className="text-muted">Email</label>
+              <input
+                onChange={handleChange("email")}
+                type="email"
+                value={email}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label className="text-muted">About</label>
+              <textarea
+                onChange={handleChange("about")}
+                type="about"
+                value={about || ""}
+                className="form-control"
+              />
+            </div>
+            {/* <div className="form-group">
+              <label className="text-muted">Password</label>
+              <input
+                onChange={handleChange("password")}
+                type="password"
+                value={password}
+                className="form-control"
+              />
+            </div> */}
+            <button type="submit" className="btn btn-outline-primary btn-block">
+              Update Profile
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );
