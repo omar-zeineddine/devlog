@@ -53,7 +53,14 @@ const BlogsPage = (props) => {
                     key={category._id}
                     href={`/categories/${category.slug}`}
                   >
-                    <a className="btn btn-primary mr-2 mt-1">{category.name}</a>
+                    <a className="btn btn-primary mr-2 mt-1">
+                      <img
+                        className={styles.tagIcon}
+                        src="assets/icons/category.svg"
+                        alt="tag icon"
+                      />
+                      {category.name}
+                    </a>
                   </Link>
                 ))}
                 {tags.map((tag) => (
