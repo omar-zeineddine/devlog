@@ -215,8 +215,8 @@ const UpdateBlog = ({ router }) => {
         <div className="form-group pb-3">
           <h5 className="mb-3">Featured Image</h5>
 
-          <label className="btn btn-outline-info">
-            Upload Image
+          <label className="btn btn-outline-gray">
+            Update Image
             <input
               onChange={handleChange("photo")}
               type="file"
