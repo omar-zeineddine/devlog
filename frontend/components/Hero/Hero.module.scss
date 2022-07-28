@@ -1,17 +1,10 @@
-.heroContainer {
-  grid-column: center-start / center-end;
-
-  @media only screen and (max-width: 550px) {
-    grid-column: full-start / full-end;
-
-  }
-}
-
 .hero {
   &__Title {
-    font-size: 3.5rem;
+    font-size: 2rem;
     font-weight: 700;
     text-align: center;
+    text-transform: uppercase;
+    text-decoration: underline;
     padding: 2.5rem 0;
 
     @media only screen and (max-width: 550px) {
