@@ -38,13 +38,13 @@ const Search = () => {
       results: [],
     });
   };
-  console.log("RESULTS:", results);
+  // console.log("RESULTS:", results);
 
   return (
-    <form onSubmit={searchHandler}>
-      <div className="container py-2">
+    <form onSubmit={searchHandler} className={styles.search}>
+      <div className="py-2">
         <div className="row">
-          <div className="pt-3 col-xl-12">
+          <div className="pt-4 col-lg-12 ">
             <div className="input-group">
               <input
                 type="search"
@@ -53,18 +53,22 @@ const Search = () => {
                 onChange={handleChange}
               />
             </div>
+            <div className="px-0 pt-2">
+              {results && (
+                <ul
+                  className={`${styles.listGroup} row list-group search mt-5 ml-3 text-center`}
+                >
+                  {results.map((blog, idx) => (
+                    <Link key={idx} href={`/blogs/${blog.slug}`}>
+                      <a>
+                        <li className="list-group-item">{blog.title}</li>
+                      </a>
+                    </Link>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-          {results && (
-            <ul className="list-group search mt-5 ml-3">
-              {results.map((blog, idx) => (
-                <Link key={idx} href={`/blogs/${blog.slug}`}>
-                  <a>
-                    <li className="list-group-item">{blog.title}</li>
-                  </a>
-                </Link>
-              ))}
-            </ul>
-          )}
         </div>
       </div>
     </form>
