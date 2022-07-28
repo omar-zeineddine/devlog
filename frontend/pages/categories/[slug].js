@@ -9,18 +9,19 @@ const Category = ({ category, blogs }) => {
         <main>
           <div className="container text-center">
             <header>
-              <div className="col-xl-12">
-                <h1 className="display-4 font-weight-bold py-5">
-                  {category.name}
-                </h1>
-                {blogs.map((blog, idx) => (
-                  <div>
-                    <Card key={idx} blog={blog} />
-                    <hr />
-                  </div>
-                ))}
-              </div>
+              <h1 className="display-4 font-weight-bold py-5">
+                {category.name}
+              </h1>
             </header>
+          </div>
+
+          <div className="col-xl-12">
+            {blogs.map((blog, idx) => (
+              <div>
+                <Card key={idx} blog={blog} />
+                <hr />
+              </div>
+            ))}
           </div>
         </main>
       </Layout>
