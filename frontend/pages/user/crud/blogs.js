@@ -7,14 +7,12 @@ const Blogs = () => {
   return (
     <Layout>
       <Private>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 py-5">
-              <h4>Manage Blogs</h4>
-            </div>
-            <div className="col-xl-12">
-              <ReadBlogs username={username} />
-            </div>
+        <div className="row">
+          <div className="col-md-12 py-5">
+            <h4>Manage Blogs</h4>
+          </div>
+          <div className="col-xl-12 mb-5">
+            <ReadBlogs username={username} />
           </div>
         </div>
       </Private>
