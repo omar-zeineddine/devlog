@@ -64,10 +64,10 @@ const ContactForm = ({ authorEmail }) => {
   );
 
   return (
-    <div>
+    <div className="mb-5">
       {alertSuccess()}
       {alertError()}
-      <form onSubmit={handleSubmit}>
+      <form className="mb-5" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="lead">Name</label>
           <input
@@ -97,14 +97,16 @@ const ContactForm = ({ authorEmail }) => {
             onChange={handleChange("message")}
             type="text"
             value={message}
-            rows="5"
+            rows="8"
             required
           ></textarea>
         </div>
 
-        <button type="submit" className="btn btn-primary">
-          {buttonText}
-        </button>
+        <div className="text-center mb-5">
+          <button type="submit" className="btn btn-primary btn-outline-gray">
+            {buttonText}
+          </button>
+        </div>
       </form>
     </div>
   );
