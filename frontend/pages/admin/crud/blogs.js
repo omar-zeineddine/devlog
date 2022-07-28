@@ -6,14 +6,12 @@ const Blogs = () => {
   return (
     <Layout>
       <Admin>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 py-5">
-              <h4>Manage Blogs</h4>
-            </div>
-            <div className="col-xl-12">
-              <ReadBlogs />
-            </div>
+        <div className="row">
+          <div className="col-md-12 py-5">
+            <h4 className="text-center">Manage Blogs</h4>
+          </div>
+          <div className="col-xl-12">
+            <ReadBlogs />
           </div>
         </div>
       </Admin>
