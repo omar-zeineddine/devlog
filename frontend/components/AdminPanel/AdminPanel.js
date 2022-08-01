@@ -1,19 +1,17 @@
 import Link from "next/link";
-import styles from "./AdminDashboard.module.scss";
+import styles from "./AdminPanel.module.scss";
 
-const AdminDashboard = () => {
+const AdminPanel = () => {
   return (
     <div className="container">
-      <h4 className={`${styles.adminDashboard__Title} py-2 mb-2`}>
-        Admin Dashboard
-      </h4>
+      <h4 className={`${styles.adminPanel_Title} py-2 mb-2`}>Admin Panel</h4>
       <div className="row">
         <div className="col-md-6">
-          <ul className={styles.adminDashboard__listGroup}>
+          <ul className={styles.adminPanel_ListGroup}>
             {/* Categories */}
-            <li className={styles.adminDashboard__listGroupItem}>
+            <li className={styles.adminPanel_ListGroupItem}>
               <img
-                className={styles.adminDashboard__listGroupItem__icon}
+                className={styles.adminPanel_ListGroupItem_Icon}
                 src="assets/icons/categories.png"
                 alt=""
               />
@@ -21,10 +19,11 @@ const AdminDashboard = () => {
                 <a>Manage Categories</a>
               </Link>
             </li>
+
             {/* Tags*/}
-            <li className={styles.adminDashboard__listGroupItem}>
+            <li className={styles.adminPanel_ListGroupItem}>
               <img
-                className={styles.adminDashboard__listGroupItem__icon}
+                className={styles.adminPanel_ListGroupItem_Icon}
                 src="assets/icons/tags.png"
                 alt=""
               />
@@ -33,9 +32,9 @@ const AdminDashboard = () => {
               </Link>
             </li>
             {/* create blog */}
-            <li className={styles.adminDashboard__listGroupItem}>
+            <li className={styles.adminPanel_ListGroupItem}>
               <img
-                className={styles.adminDashboard__listGroupItem__icon}
+                className={styles.adminPanel_ListGroupItem_Icon}
                 src="assets/icons/create.png"
                 alt=""
               />
@@ -46,11 +45,11 @@ const AdminDashboard = () => {
           </ul>
         </div>
         <div className="col-md-6">
-          <ul className={styles.adminDashboard__listGroup}>
+          <ul className={styles.adminPanel_ListGroup}>
             {/* Blogs */}
-            <li className={styles.adminDashboard__listGroupItem}>
+            <li className={styles.adminPanel_ListGroupItem}>
               <img
-                className={styles.adminDashboard__listGroupItem__icon}
+                className={styles.adminPanel_ListGroupItem_Icon}
                 src="assets/icons/update-delete.png"
                 alt=""
               />
@@ -59,9 +58,9 @@ const AdminDashboard = () => {
               </Link>
             </li>
             {/* Profile */}
-            <li className={styles.adminDashboard__listGroupItem}>
+            <li className={styles.adminPanel_ListGroupItem}>
               <img
-                className={styles.adminDashboard__listGroupItem__icon}
+                className={styles.adminPanel_ListGroupItem_Icon}
                 src="assets/icons/profile.png"
                 alt=""
               />
@@ -76,4 +75,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdminPanel;

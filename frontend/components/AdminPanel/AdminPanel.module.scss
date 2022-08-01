@@ -1,25 +1,25 @@
-.adminDashboard {
+.adminPanel {
 
-  &__Title {
+  &_Title {
     font-size: 2.5rem;
     margin: 0;
     text-align: center;
     margin: 2em;
   }
 
-  &__listGroup {
+  &_ListGroup {
     list-style-type: none;
     padding: 0;
     padding:1em;
   }
 
-  &__listGroupItem {
+  &_ListGroupItem {
     padding: 2rem;
     border: .2rem solid #fff;
     border-radius: 1rem;
     margin-bottom: 2em !important;
 
-    &__icon {
+    &_Icon {
       max-width: 15%;
     }
     &:hover {
