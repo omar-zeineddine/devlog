@@ -1,5 +1,6 @@
 import fetch from "isomorphic-fetch";
 import { API } from "../config";
+import { jsonHeader } from "./utils/headers";
 
 export const emailContactForm = (data) => {
   let emailEndpoint;
@@ -9,15 +10,13 @@ export const emailContactForm = (data) => {
   } else {
     emailEndpoint = `${API}/contact`;
   }
-
-  return fetch(emailEndpoint, {
+  return fetch(`${emailEndpoint}`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
-    .catch((error) => console.error(error));
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };
