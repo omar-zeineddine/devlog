@@ -2,6 +2,7 @@ import fetch from "isomorphic-fetch";
 import { API } from "../config";
 import { isAuthenticated, responseHandler } from "./auth";
 import queryString from "query-string";
+import { jsonHeader } from "./utils/headers";
 
 export const createBlog = (blog, token) => {
   let createBlogEndpoint;
@@ -34,10 +35,7 @@ export const listBlogsWithCategoriesAndTags = (skip, limit) => {
   };
   return fetch(`${API}/blogs-categories-tags`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     // send skip and limit data from client side to backend
     /* body: JSON.stringify(data), */
   })
@@ -48,10 +46,7 @@ export const listBlogsWithCategoriesAndTags = (skip, limit) => {
 export const getRelatedBlogs = (blog) => {
   return fetch(`${API}/blogs/related`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(blog),
   })
     .then((response) => response.json())
@@ -69,10 +64,7 @@ export const showBlog = (slug) => {
 export const showRelatedBlogs = (blog) => {
   return fetch(`${API}/blogs/related`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(blog),
   })
     .then((response) => response.json())
@@ -132,7 +124,6 @@ export const removeBlog = (slug, token) => {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
     },
   })
     .then((response) => {
