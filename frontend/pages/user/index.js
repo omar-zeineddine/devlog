@@ -1,12 +1,11 @@
-import Link from "next/link";
 import Layout from "../../components/Layout";
 import Private from "../../components/auth/Private/Private";
-import UserDashboard from "../../components/UserDashboard/UserDashboard";
+import UserPanel from "../../components/UserPanel/UserPanel";
 
 const UserPage = () => (
   <Layout>
     <Private>
-      <UserDashboard />
+      <UserPanel />
     </Private>
   </Layout>
 );
