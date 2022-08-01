@@ -2,6 +2,7 @@ import fetch from "isomorphic-fetch";
 import { API } from "../config";
 import cookie from "js-cookie";
 import Router from "next/router";
+import { jsonHeader } from "./utils/headers";
 
 export const responseHandler = (response) => {
   // on token expiration, 401 status code response
@@ -23,10 +24,7 @@ export const responseHandler = (response) => {
 export const signup = (user) => {
   return fetch(`${API}/signup`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(user),
   })
     .then((res) => {
@@ -38,10 +36,7 @@ export const signup = (user) => {
 export const signin = (user) => {
   return fetch(`${API}/signin`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(user),
   })
     .then((res) => {
@@ -149,10 +144,7 @@ export const updateUser = (user, next) => {
 export const forgotPass = (email) => {
   return fetch(`${API}/forgot-pass`, {
     method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(email),
   })
     .then((response) => response.json())
@@ -162,10 +154,7 @@ export const forgotPass = (email) => {
 export const resetPass = (resetInfo) => {
   return fetch(`${API}/reset-pass`, {
     method: "PUT",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(resetInfo),
   })
     .then((response) => response.json())
@@ -175,10 +164,7 @@ export const resetPass = (resetInfo) => {
 export const initialSignup = (user) => {
   return fetch(`${API}/initial-signup`, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: jsonHeader,
     body: JSON.stringify(user),
   })
     .then((response) => response.json())
