@@ -65,7 +65,7 @@ const SignupComponent = () => {
     return (
       <section className={styles.signupForm}>
         <div>
-          <h2 className={styles.signupForm__title}>Register</h2>
+          <h2 className={styles.signupFormTitle}>Register</h2>
 
           <form onSubmit={handleSubmit}>
             <FormInput
@@ -89,7 +89,7 @@ const SignupComponent = () => {
               value={password}
             />
 
-            <button type="submit" className={styles.signupForm__signupBtn}>
+            <button type="submit" className={styles.signupFormSignupBtn}>
               SIGN UP
             </button>
           </form>
@@ -100,7 +100,7 @@ const SignupComponent = () => {
 
   return (
     <>
-      <div className={styles.signupForm__messages}>
+      <div className={styles.signupFormMessages}>
         {showError()}
         {showLoading()}
         {showMessage()}

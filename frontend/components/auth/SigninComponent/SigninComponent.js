@@ -58,7 +58,7 @@ const SigninComponent = () => {
 
   return (
     <div className="container">
-      <div className="pt-4 pb-0">
+      <div className={styles.messages}>
         {showError()}
         {showLoading()}
         {showMessage()}
