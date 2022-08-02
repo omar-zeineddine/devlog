@@ -24,9 +24,21 @@ Reasons why developers should blog:
 - writing based around technical words isn't always easy task, blogging can improve a developers writing and communication skills
 
 <br><br>
-<img src="./readme/title5.svg" id='implementation'/>
 
-> Using the above mentioned tech stack and the wireframes built with Figma, the implementation of the app is shown as below (recordings from the real app)
+<img src="./readme/title4.svg" id='tech'/>
+
+A brief high-level overview of the tech stack used in the Devlog web app:
+
+- Frontend: Devlog uses [React](https://reactjs.org), a javascript library for building user interfaces.
+  The styling of individual components was done using [SASS](https://sass-lang.com/), a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).
+- Backend: Devlog uses [Node.js](https://nodejs.org/en) and [Express](https://expressjs.com/).
+  Node.js is an open-source, server-side, JavaScript runtime environment that is solely based on the V8 JavaScript Chrome Engine. Node.js can be used to create a variety of applications, including Command-Line Applications, Web Applications, Real-time Chat Applications, and REST API Servers.
+  Express is a node js web application framework that provides broad features for building web and mobile applications. It is used to build a single page, multipage, and hybrid web application. It's a layer built on the top of the Node js that helps manage servers and routes.
+- For persistent storage, the app uses [MongoDB Atlas](https://www.mongodb.com/atlas/database). A Multi-Cloud Database Service offered by MongoDB that simplifies Database Deployment and Management while providing the flexibility required to build resilient and performant global applications on the Cloud providers of your choice.
+
+<br><br>
+
+<img src="./readme/title6.svg" id='install'/>
 
 > To get a local copy up and running follow these simple steps.
 
