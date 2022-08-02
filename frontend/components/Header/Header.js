@@ -11,6 +11,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import Darkreader from "../Darkreader/DarkReader.js";
 import NProgress from "nprogress";
 import styles from "./Header.module.scss";
 
@@ -92,6 +93,7 @@ const Header = () => {
                 </>
               )}
             </Nav>
+            <Darkreader />
           </Collapse>
         </div>
       </Navbar>
