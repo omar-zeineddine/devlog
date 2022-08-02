@@ -2,9 +2,11 @@
 
 <div align="center">
 
-> Cloud Skills Builder
+> Devlog is a web application built to make blogging an easy and accessible task to all developers
 
 **[PROJECT PHILOSOPHY](#philosophy) • [WIREFRAMES](#wireframes) • [TECH STACK](#tech) • [IMPLEMENTATION](#implementation) • [HOW TO RUN?](#install)**
+
+</div>
 
 <br><br>
 
@@ -27,14 +29,22 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/omar-zeineddine/cloud-skills-builder.git
+   git clone https://github.com/omar-zeineddine/devlog
    ```
-2. Navigate to the Frontend folder and install dependencies
+2. Navigate to the backend folder and install dependencies
    ```sh
-   cd frontend
+   cd backend
    npm install
    ```
-3. Run the start up command
+3. Navigate back and enter the frontend folder and install dependencies
+
    ```sh
-   npm start
+   cd .. && cd frontend
+   npm install
+   ```
+
+4. Run the web app
+   ```sh
+   cd backend
+   npm run dev
    ```
