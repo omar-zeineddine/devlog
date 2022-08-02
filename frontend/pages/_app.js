@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React from "react";
-import "../styles/bootstrap/bootstrap.min.css";
 import "../styles/nprogress/nprogress.min.css";
 import "../styles/quill/quill.snow.css";
 import "../styles/global.scss";
