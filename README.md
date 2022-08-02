@@ -10,6 +10,20 @@
 
 <br><br>
 
+<img src="./readme/title2.svg" id='philosophy'/>
+
+> Developers spend a lot of time trying to achieve a goal, fixing a bug, or refactoring code
+
+> The idea behind Devlog is to be the go to place for devs, a place where they can write down their thoughts, or document their latest ideas around a community that share their same interests
+
+Reasons why developers should blog:
+
+- Teaching others will improve your skills and make you a better programmer
+- blog posts are a great medium for developers to learn and share their ideas
+- blogs are a way to staying up to date in the continuously evolving tech space
+- writing based around technical words isn't always easy task, blogging can improve a developers writing and communication skills
+
+<br><br>
 <img src="./readme/title5.svg" id='implementation'/>
 
 > Using the above mentioned tech stack and the wireframes built with Figma, the implementation of the app is shown as below (recordings from the real app)
