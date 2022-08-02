@@ -65,7 +65,7 @@ const SigninComponent = () => {
       </div>
       <section className={`${styles.signinForm} my-0`}>
         <div>
-          <h2 className={`${styles.signinForm__title} mt-0`}>Sign In</h2>
+          <h2 className={`${styles.signinFormTitle} mt-0`}>Sign In</h2>
           <form onSubmit={handleSubmit}>
             <FormInput
               onChange={handleChange("email")}
@@ -81,7 +81,7 @@ const SigninComponent = () => {
               value={password}
             />
 
-            <button type="submit" className={styles.signinForm__signinBtn}>
+            <button type="submit" className={styles.signinFormSigninBtn}>
               SIGN IN
             </button>
             <div className="text-center">
