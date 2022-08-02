@@ -31,9 +31,16 @@ A brief high-level overview of the tech stack used in the Devlog web app:
 
 - Frontend: Devlog uses [React](https://reactjs.org), a javascript library for building user interfaces.
   The styling of individual components was done using [SASS](https://sass-lang.com/), a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).
+
+  [Next.js](https://nextjs.org/) - for SSR (server-side rendering), statically generated pages.
+  Next.js is an open source web development framework built on top of Node.js, it provides react based applications with functionalities such as server-side-rendering and generating static websites.
+
 - Backend: Devlog uses [Node.js](https://nodejs.org/en) and [Express](https://expressjs.com/).
+
   Node.js is an open-source, server-side, JavaScript runtime environment that is solely based on the V8 JavaScript Chrome Engine. Node.js can be used to create a variety of applications, including Command-Line Applications, Web Applications, Real-time Chat Applications, and REST API Servers.
-  Express is a node js web application framework that provides broad features for building web and mobile applications. It is used to build a single page, multipage, and hybrid web application. It's a layer built on the top of the Node js that helps manage servers and routes.
+
+  Express is a Node.js web application framework that provides broad features for building web and mobile applications. It is used to build a single page, multipage, and hybrid web application. It's a layer built on the top of the Node js that helps manage servers and routes.
+
 - For persistent storage, the app uses [MongoDB Atlas](https://www.mongodb.com/atlas/database). A Multi-Cloud Database Service offered by MongoDB that simplifies Database Deployment and Management while providing the flexibility required to build resilient and performant global applications on the Cloud providers of your choice.
 - [SendGrid Email API](https://sendgrid.com/solutions/email-api/) is used to verify user emails on signup and for the password reset requests.
 
@@ -56,7 +63,7 @@ A brief high-level overview of the tech stack used in the Devlog web app:
   ```sh
   cd backend
   touch .env
-  # add random jwt keys (for auth, email activation and email reset)
+  # add random jwt secret keys (for auth, email activation and email reset)
   echo "JWT_SECRET=$(openssl rand -base64 32)" > .env
   echo "JWT_ACTIVATE=$(openssl rand -base64 32)" >> .env
   echo "JWT_RESET_PASS=$(openssl rand -base64 32)" >> .env
