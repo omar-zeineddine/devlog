@@ -5,9 +5,11 @@ const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
 const { errorHandler } = require("../utils/dbErrorHandler");
-const sendgridMail = require("@sendgrid/mail");
-sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 const AWS = require("aws-sdk");
+const sendgridMail = require("@sendgrid/mail");
+
+// env imports
+sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 AWS.config.update({
   region: process.env.AWS_REGION,
@@ -296,41 +298,68 @@ exports.resetPass = (req, res) => {
 };
 
 // Prepare methods to migrate to AWS SES
+// AWS SES - limited email sending ability when account is in sandbox mode
+// https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html
+// todo: convert to AWS SES on production mode
+
 exports.registerAws = (req, res) => {
-  const { name, email, password } = req.body;
-  const params = {
-    Source: process.env.EMAIL_FROM,
-    Destination: {
-      ToAddresses: [email],
-    },
-    ReplyToAddresses: [process.env.EMAIL_TO],
-    Message: {
-      Body: {
-        Html: {
-          Charset: "UTF-8",
-          Data: `
+  const { name, email, password } = req.body; // same fields used for signup
+
+  // check if email already exists in database
+  User.findOne({ email: email.toLowerCase() }, (err, user) => {
+    if (user) {
+      // console.log(err);
+      return res.status(400).json({
+        error: "Email is already taken",
+      });
+    }
+
+    // send hashed token with info to user email, name and password
+    const token = jwt.sign(
+      { name, email, password },
+      process.env.JWT_ACTIVATE,
+      {
+        expiresIn: "15m",
+      }
+    );
+
+    const params = {
+      Source: process.env.EMAIL_FROM,
+      Destination: {
+        ToAddresses: [email],
+      },
+      ReplyToAddresses: [process.env.EMAIL_TO],
+      Message: {
+        Body: {
+          Html: {
+            Charset: "UTF-8",
+            Data: `
           <html>
-          <body>
-          <h1>hello ${name}</h1>
-          </body>
+          <h4>Please use the following link to activate your account and complete the registration process:</h4>
+          <p>${process.env.CLIENT_URL}/auth/account/activate/${token}</p>
+          <hr/>
+          <p>This email may contain sensitive information</p>
           </html>
           `,
+          },
+        },
+        Subject: {
+          Charset: "UTF-8",
+          Data: "Devlog - New Account Activation",
         },
       },
-      Subject: {
-        Charset: "UTF-8",
-        Data: "Complete Registration",
-      },
-    },
-  };
-  const sendEmailOnRegister = ses.sendEmail(params).promise();
-  sendEmailOnRegister
-    .then((data) => {
-      console.log("email submitted to SES", data);
-      res.send("email sent");
-    })
-    .catch((err) => {
-      console.log("ses email on register", err);
-      res.json("sending email failed");
-    });
+    };
+
+    // email token to user
+    const sendEmailOnRegister = ses.sendEmail(params).promise();
+    sendEmailOnRegister
+      .then((data) => {
+        console.log("email submitted to SES", data);
+        res.send("email sent");
+      })
+      .catch((err) => {
+        console.log("ses email on register", err);
+        res.json("sending email failed");
+      });
+  });
 };
