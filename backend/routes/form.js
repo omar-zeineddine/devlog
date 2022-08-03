@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { contactForm, contactBlogAuthorForm } = require("../controllers/form");
+const { contactForm, contactBlogAuthor } = require("../controllers/form");
 
 // validators
 const { runValidation } = require("../validators");
@@ -11,7 +11,7 @@ router.post(
   "/contact-author",
   contactFormValidator,
   runValidation,
-  contactBlogAuthorForm
+  contactBlogAuthor
 );
 
 module.exports = router;

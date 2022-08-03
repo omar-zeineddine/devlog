@@ -7,6 +7,10 @@ exports.registerSesEmailParams = (email, token) => {
     },
     ReplyToAddresses: [process.env.EMAIL_TO],
     Message: {
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Devlog - New Account Activation",
+      },
       Body: {
         Html: {
           Charset: "UTF-8",
@@ -19,10 +23,6 @@ exports.registerSesEmailParams = (email, token) => {
           </html>
           `,
         },
-      },
-      Subject: {
-        Charset: "UTF-8",
-        Data: "Devlog - New Account Activation",
       },
     },
   };
@@ -37,6 +37,10 @@ exports.forgotPass = (email, token) => {
     },
     ReplyToAddresses: [process.env.EMAIL_TO],
     Message: {
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Devlog - Password Reset Link",
+      },
       Body: {
         Html: {
           Charset: "UTF-8",
@@ -50,10 +54,6 @@ exports.forgotPass = (email, token) => {
           `,
         },
       },
-      Subject: {
-        Charset: "UTF-8",
-        Data: "Devlog - Password Reset Link",
-      },
     },
   };
 };
@@ -65,6 +65,10 @@ exports.contactForm = (email, name, message) => {
       ToAddresses: [process.env.EMAIL_TO],
     },
     Message: {
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Devlog - Visitor Contact",
+      },
       Body: {
         Html: {
           Charset: "UTF-8",
@@ -81,9 +85,39 @@ exports.contactForm = (email, name, message) => {
           `,
         },
       },
+    },
+  };
+};
+
+exports.contactAuthorForm = (authorEmail, email, name, message) => {
+  return {
+    Source: email,
+    Destination: {
+      ToAddresses: [authorEmail],
+    },
+    Message: {
       Subject: {
         Charset: "UTF-8",
-        Data: "Devlog - Visitor Contact",
+        Data: "Devlog - contact",
+      },
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: `
+          <html>
+              <h3>Message received from ${email}</h3>
+              <h3>Name: ${name}</h3>
+              <h3>Email: ${email}</h3>
+              <div>
+                <h3>Message:</h3> 
+                <p>${message}</p>
+              </div>
+              <hr/>
+            <p>Email may contain sensitive information</p>
+          </html>
+
+          `,
+        },
       },
     },
   };

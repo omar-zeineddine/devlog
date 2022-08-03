@@ -1,5 +1,5 @@
 const AWS = require("aws-sdk");
-const { contactForm } = require("../utils/sesEmail");
+const { contactForm, contactAuthorForm } = require("../utils/sesEmail");
 
 // AWS SES
 AWS.config.update({
@@ -35,33 +35,15 @@ exports.contactForm = (req, res) => {
     });
 };
 
-// contact blog poster
-exports.contactBlogAuthorForm = (req, res) => {
+// contact blog post author
+exports.contactBlogAuthor = (req, res) => {
   // authorEmail: used to send to author
   const { authorEmail, name, email, message } = req.body;
   // send to author and admin
-  let mailList = [authorEmail, process.env.EMAIL_TO];
+  const params = contactAuthorForm(authorEmail, name, email, message);
+  const sendEmailToAuthor = ses.sendEmail(params).promise();
 
-  const emailData = {
-    to: mailList,
-    from: email,
-    subject: `Someone has messaged you from DevLog`,
-    text: `Email received from 
-        Sender name: ${name}
-        Sender email: ${email}
-        Sender message: ${message}
-    `,
-    html: `
-        <h3>Message received from ${email}</h3>
-        <h3>Name: ${name}</h3>
-        <h3>Email: ${email}</h3>
-        <div>
-          <h3>Message:</h3> 
-          <p>${message}</p>
-        </div>
-        
-        <hr/>
-    `,
-  };
-  sendgridMail.send(emailData).then((send) => res.json({ success: true }));
+  sendEmailToAuthor.then((data) => {
+    res.json({ success: true });
+  });
 };
