@@ -1,35 +1,38 @@
-const sendgridMail = require("@sendgrid/mail");
-sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+const AWS = require("aws-sdk");
+const { contactForm } = require("../utils/sesEmail");
+
+// AWS SES
+AWS.config.update({
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+const ses = new AWS.SES({ apiVersion: "2010-12-01" });
 
 exports.contactForm = (req, res) => {
   //   res.send("contact endpoint");
   const { email, name, message } = req.body;
+
   // console.log(req.body);
 
-  const emailData = {
-    to: process.env.EMAIL_TO,
-    from: email,
-    subject: `Contact form - DevLog`,
-    text: `Email received from 
-        Sender name: ${name}
-        Sender email: ${email}
-        Sender message: ${message}
-    `,
-    // html email on supported clients
-    html: `
-        <h3>Email received from ${email}</h3>
-        <h3>Name: ${name}</h3>
-        <h3>Email: ${email}</h3>
-        <p>Message:  ${message}</p>
-        <hr/>
-        <p>Email may contain sensitive information</p>
-    `,
-  };
-  sendgridMail.send(emailData).then((sent) => {
-    return res.json({
-      success: true,
+  const params = contactForm(email, name, message);
+  const sendEmailOnContact = ses.sendEmail(params).promise();
+
+  sendEmailOnContact
+    .then((data) => {
+      console.log("email submitted to SES", data);
+      // res.send("email sent");
+      res.json({
+        success: true,
+      });
+    })
+    .catch((err) => {
+      console.log("ses contact email", err);
+      res.json({
+        err: "Email could not be sent.",
+      });
     });
-  });
 };
 
 // contact blog poster
