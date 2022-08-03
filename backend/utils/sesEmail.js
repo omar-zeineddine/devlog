@@ -57,3 +57,34 @@ exports.forgotPass = (email, token) => {
     },
   };
 };
+
+exports.contactForm = (email, name, message) => {
+  return {
+    Source: email,
+    Destination: {
+      ToAddresses: [process.env.EMAIL_TO],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: `
+          <html>
+            <h3>Email received from ${email}</h3>
+            <h3>Name: ${name}</h3>
+            <h3>Email: ${email}</h3>
+            <p>Message:  ${message}</p>
+            <hr/>
+            <p>Email may contain sensitive information</p>
+          </html>
+
+          `,
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Devlog - Visitor Contact",
+      },
+    },
+  };
+};
