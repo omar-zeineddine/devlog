@@ -33,6 +33,7 @@ A brief high-level overview of the tech stack used in the Devlog web app:
   The styling of individual components was done using [SASS](https://sass-lang.com/), a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).
 
   [Next.js](https://nextjs.org/) - for SSR (server-side rendering), statically generated pages.
+
   Next.js is an open source web development framework built on top of Node.js, it provides react based applications with functionalities such as server-side-rendering and generating static websites.
 
 - Backend: Devlog uses [Node.js](https://nodejs.org/en) and [Express](https://expressjs.com/).
@@ -42,9 +43,11 @@ A brief high-level overview of the tech stack used in the Devlog web app:
   Express is a Node.js web application framework that provides broad features for building web and mobile applications. It is used to build a single page, multipage, and hybrid web application. It's a layer built on the top of the Node js that helps manage servers and routes.
 
 - For persistent storage, the app uses [MongoDB Atlas](https://www.mongodb.com/atlas/database). A Multi-Cloud Database Service offered by MongoDB that simplifies Database Deployment and Management while providing the flexibility required to build resilient and performant global applications on the Cloud providers of your choice.
-- [SendGrid Email API](https://sendgrid.com/solutions/email-api/) is used to verify user emails on signup and for the password reset requests.
 
-<br><br>
+- Amazon Simple Email Service [SES](https://aws.amazon.com/ses/) is used to verify user emails on signup, account activation, and password reset requests.
+
+  **Note:** currently the app is running in _[SES sandbox mode](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)_, email functionality is only working with emails listed in the SES verified identities.
+  <br><br>
 
 <img src="./readme/title6.svg" id='install'/>
 
