@@ -9,11 +9,21 @@ const stripHtml = require("string-strip-html");
 const fs = require("fs");
 const { errorHandler } = require("../utils/dbErrorHandler");
 const { textTrim } = require("../utils/trim");
+const AWS = require("aws-sdk");
+const { v4: uuidv4 } = require("uuid");
+
+// S3
+const s3 = new AWS.S3({
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
 
 exports.createBlog = (req, res) => {
   // get all form data
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
+
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(400).json({
