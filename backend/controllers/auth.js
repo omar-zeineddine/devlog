@@ -6,12 +6,9 @@ const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
 const { errorHandler } = require("../utils/dbErrorHandler");
 const AWS = require("aws-sdk");
-const sendgridMail = require("@sendgrid/mail");
-const { registerSesEmailParams } = require("../utils/sesEmail");
+const { registerSesEmailParams, forgotPass } = require("../utils/sesEmail");
 
-// env imports
-sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
-
+// AWS SES
 AWS.config.update({
   region: process.env.AWS_REGION,
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -25,45 +22,51 @@ const ses = new AWS.SES({ apiVersion: "2010-12-01" });
 // embed signup info (name, email, pass) in json token -> send to user email
 // save user info when activation link is clicked - (useful for spam prevention)
 
+// AWS SES - limited email sending ability when account is in sandbox mode
+// https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html
+// can send email to 3 verified identities in dev mode
+// todo: convert to AWS SES on production mode
+
 exports.initialSignup = (req, res) => {
   const { name, email, password } = req.body; // same fields used for signup
 
   // check if email already exists in database
   User.findOne({ email: email.toLowerCase() }, (err, user) => {
     if (user) {
+      // console.log(err);
       return res.status(400).json({
-        error: "Email is taken",
+        error: "Email is already taken",
       });
     }
-    // send token with info to user email
+
+    // send hashed token with info to user email, name and password
     const token = jwt.sign(
       { name, email, password },
       process.env.JWT_ACTIVATE,
       {
-        expiresIn: "10m",
+        expiresIn: "15m",
       }
     );
 
-    // email token to user
-    const emailData = {
-      to: email,
-      from: process.env.EMAIL_FROM,
-      subject: "Devlog - New Account Activation",
-      html: `
-        <h4>Please use the following link to activate your account:</h4>
-        <p>${process.env.CLIENT_URL}/auth/account/activate/${token}</p>
-        <hr/>
-        <p>This email may contain sensitive information</p>
-    `,
-    };
+    // move params to a utility function
+    const params = registerSesEmailParams(email, token);
 
-    sendgridMail.send(emailData).then((sent) => {
-      return res.json({
-        message: `
-        Email has been sent to ${email}.
-        Follow instructions to activate your account.`,
+    // email token to user
+    const sendEmailOnRegister = ses.sendEmail(params).promise();
+    sendEmailOnRegister
+      .then((data) => {
+        console.log("email submitted to SES", data);
+        // res.send("email sent");
+        res.json({
+          message: `email has been sent to: ${email}, follow email instructions to complete registration`,
+        });
+      })
+      .catch((err) => {
+        console.log("ses email on register", err);
+        res.json({
+          err: "Email could not be verified.",
+        });
       });
-    });
   });
 };
 
@@ -219,17 +222,10 @@ exports.forgotPass = (req, res) => {
       expiresIn: "10m",
     });
 
-    const emailData = {
-      to: email,
-      from: process.env.EMAIL_FROM,
-      subject: "Password reset link",
-      html: `
-        <h4>Please use the following link to reset your password:</h4>
-        <p>${process.env.CLIENT_URL}/auth/password/reset/${token}</p>
-        <hr/>
-        <p>This email may contain sensitive information</p>
-    `,
-    };
+    const params = forgotPass(email, token);
+
+    // email token to user
+    const sendEmailOnForgot = ses.sendEmail(params).promise();
 
     return user.updateOne({ resetPasswordLink: token }, (err, success) => {
       if (err) {
@@ -237,14 +233,20 @@ exports.forgotPass = (req, res) => {
           error: errorHandler(err),
         });
       } else {
-        sendgridMail.send(emailData).then((sent) =>
-          res.json({
-            message: `
-              Email has been sent to ${email}. 
-              Follow password reset instructions. 
-              `,
+        sendEmailOnForgot
+          .then((data) => {
+            console.log("email submitted to SES", data);
+            // res.send("email sent");
+            res.json({
+              message: `email has been sent to: ${email}, follow email instructions to complete reset your password`,
+            });
           })
-        );
+          .catch((err) => {
+            console.log("ses email on pass reset", err);
+            res.json({
+              err: "Email could not be sent.",
+            });
+          });
       }
     });
   });
@@ -296,52 +298,4 @@ exports.resetPass = (req, res) => {
       }
     );
   }
-};
-
-// Prepare methods to migrate to AWS SES
-// AWS SES - limited email sending ability when account is in sandbox mode
-// https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html
-// todo: convert to AWS SES on production mode
-
-exports.registerAws = (req, res) => {
-  const { name, email, password } = req.body; // same fields used for signup
-
-  // check if email already exists in database
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
-    if (user) {
-      // console.log(err);
-      return res.status(400).json({
-        error: "Email is already taken",
-      });
-    }
-
-    // send hashed token with info to user email, name and password
-    const token = jwt.sign(
-      { name, email, password },
-      process.env.JWT_ACTIVATE,
-      {
-        expiresIn: "15m",
-      }
-    );
-
-    // move params to a utility function
-    const params = registerSesEmailParams(email, token);
-
-    // email token to user
-    const sendEmailOnRegister = ses.sendEmail(params).promise();
-    sendEmailOnRegister
-      .then((data) => {
-        console.log("email submitted to SES", data);
-        // res.send("email sent");
-        res.json({
-          message: `email has been sent to: ${email}, follow email instructions to complete registration`,
-        });
-      })
-      .catch((err) => {
-        console.log("ses email on register", err);
-        res.json({
-          err: "Email could not be verified.",
-        });
-      });
-  });
 };
