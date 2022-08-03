@@ -7,6 +7,7 @@ const { expressjwt } = require("express-jwt");
 const { errorHandler } = require("../utils/dbErrorHandler");
 const AWS = require("aws-sdk");
 const sendgridMail = require("@sendgrid/mail");
+const { registerSesEmailParams } = require("../utils/sesEmail");
 
 // env imports
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -323,43 +324,24 @@ exports.registerAws = (req, res) => {
       }
     );
 
-    const params = {
-      Source: process.env.EMAIL_FROM,
-      Destination: {
-        ToAddresses: [email],
-      },
-      ReplyToAddresses: [process.env.EMAIL_TO],
-      Message: {
-        Body: {
-          Html: {
-            Charset: "UTF-8",
-            Data: `
-          <html>
-          <h4>Please use the following link to activate your account and complete the registration process:</h4>
-          <p>${process.env.CLIENT_URL}/auth/account/activate/${token}</p>
-          <hr/>
-          <p>This email may contain sensitive information</p>
-          </html>
-          `,
-          },
-        },
-        Subject: {
-          Charset: "UTF-8",
-          Data: "Devlog - New Account Activation",
-        },
-      },
-    };
+    // move params to a utility function
+    const params = registerSesEmailParams(email, token);
 
     // email token to user
     const sendEmailOnRegister = ses.sendEmail(params).promise();
     sendEmailOnRegister
       .then((data) => {
         console.log("email submitted to SES", data);
-        res.send("email sent");
+        // res.send("email sent");
+        res.json({
+          message: `email has been sent to: ${email}, follow email instructions to complete registration`,
+        });
       })
       .catch((err) => {
         console.log("ses email on register", err);
-        res.json("sending email failed");
+        res.json({
+          err: "Email could not be verified.",
+        });
       });
   });
 };
