@@ -7,6 +7,15 @@ const { expressjwt } = require("express-jwt");
 const { errorHandler } = require("../utils/dbErrorHandler");
 const sendgridMail = require("@sendgrid/mail");
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+const AWS = require("aws-sdk");
+
+AWS.config.update({
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+
+const ses = new AWS.SES({ apiVersion: "2010-12-01" });
 
 // new user - account activation
 // before creating new user
@@ -48,7 +57,7 @@ exports.initialSignup = (req, res) => {
     sendgridMail.send(emailData).then((sent) => {
       return res.json({
         message: `
-        Email has been sent to ${email}. 
+        Email has been sent to ${email}.
         Follow instructions to activate your account.`,
       });
     });
@@ -284,4 +293,44 @@ exports.resetPass = (req, res) => {
       }
     );
   }
+};
+
+// Prepare methods to migrate to AWS SES
+exports.registerAws = (req, res) => {
+  const { name, email, password } = req.body;
+  const params = {
+    Source: process.env.EMAIL_FROM,
+    Destination: {
+      ToAddresses: [email],
+    },
+    ReplyToAddresses: [process.env.EMAIL_TO],
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: `
+          <html>
+          <body>
+          <h1>hello ${name}</h1>
+          </body>
+          </html>
+          `,
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Complete Registration",
+      },
+    },
+  };
+  const sendEmailOnRegister = ses.sendEmail(params).promise();
+  sendEmailOnRegister
+    .then((data) => {
+      console.log("email submitted to SES", data);
+      res.send("email sent");
+    })
+    .catch((err) => {
+      console.log("ses email on register", err);
+      res.json("sending email failed");
+    });
 };
