@@ -401,10 +401,7 @@ exports.getUserBlogs = (req, res) => {
 };
 
 exports.createBlog = (req, res) => {
-  // get all form data
   let form = new formidable.IncomingForm();
-
-  form.keepExtensions = true;
 
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -412,71 +409,43 @@ exports.createBlog = (req, res) => {
         error: "Image could not be uploaded",
       });
     }
-    // console.table({ err, fields, files });
 
     const { title, body } = fields;
     const { photo } = files;
 
-    // create new blog
-    let blog = new Blog();
-    blog.title = title;
-    blog.body = body;
-    // blog.excerpt = textTrim(body, 250, " ", "...");
-    // blog.slug = slugify(title).toLowerCase();
-    // blog.metatitle = `${title} - ${process.env.APP_NAME}`;
-    // blog.metadescription = stripHtml(body.substring(0, 160));
-    // blog.postedBy = req.auth._id;
-    // categories and tags comma separated arrays
-    // let catsArray = categories && categories.split(",");
-    // let tagsArray = tags && tags.split(",");
+    let blog = new Blog({ title, body });
 
-    // handle file uploads
-    // if (files.photo) {
-    //   if (files.photo.size > 500000) {
-    //     return res.status(400).json({
-    //       error: "Image should be less than 0.5MB in size",
-    //     });
-    //   }
-    //   // blog.photo.data = fs.readFileSync(files.photo.filepath);
-    //   // blog.photo.contentType = files.photo.mimetype;
-    // }
-
-    // handle image uploads
     if (photo.size > 500000) {
       return res.status(400).json({
         error: "Image should be less than 0.5 MB",
       });
     }
-    // Read content from the file
 
-    // upload to s3 bucket
     const params = {
       Bucket: "s3-devlog-admin",
       Key: `blog/${uuidv4()}`,
       Body: fs.readFileSync(photo.filepath),
       ACL: "public-read",
-      contentType: "image/jpeg",
+      ContentType: `image/jpg`,
     };
 
-    s3.upload(params, function (err, data) {
+    s3.upload(params, (err, data) => {
       if (err) {
         console.log(err);
-        res.status(400).json({ error: "upload to s3 failed" });
-        console.log("aws s3 res data", data);
-        blog.photo.url = data.Location; // get image url
-        blog.photo.key = data.Key; // get image key
+        res.status(400).json({ error: "Upload to s3 failed" });
       }
-    });
+      console.log("AWS UPLOAD RES DATA", data);
+      blog.photo.url = data.Location;
+      blog.photo.key = data.Key;
 
-    // // save the blog
-    blog.save((err, result) => {
-      if (err) {
-        return res.status(400).json({
-          // error: errorHandler(err),
-          error: "duplicate content",
-        });
-        return res.json(result);
-      }
+      // save to db
+      blog.save((err, success) => {
+        if (err) {
+          console.log(err);
+          res.status(400).json({ error: "Duplicate blog" });
+        }
+        return res.json(success);
+      });
     });
   });
 };
