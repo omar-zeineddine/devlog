@@ -62,6 +62,18 @@ A brief high-level overview of the tech stack used in the Devlog web app:
   **Note:** currently the app is running in _[SES sandbox mode](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)_, email functionality is only working with emails listed in the SES verified identities.
   <br><br>
 
+<img src="./readme/title5.svg" id='implementation'/>
+
+> Using the above mentioned tech stack and the wireframes created with Figma, the implementation of the app is shown as below (animated gifs from the actual web app)
+
+> | Registration Validation                                                               | Account Activation                                                                         |
+> | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+> | <img src="readme/devlog-gifs/01-formValidation.gif" alt="login" style="width:350px"/> | <img src="readme/devlog-gifs/03-accountActivation.gif" alt="drawing" style="width:350px"/> |
+
+> | Email confirmation                                                                       | Password Reset                                                                         |
+> | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/02-emailConfirmation.gif" alt="login" style="width:350px"/> | <img src="readme/devlog-gifs/04-passwordReset.gif" alt="drawing" style="width:350px"/> |
+
 <img src="./readme/title6.svg" id='install'/>
 
 > To get a local copy up and running follow these simple steps.
