@@ -81,9 +81,14 @@ A brief high-level overview of the tech stack used in the Devlog web app:
 > | <img src="readme/devlog-gifs/05-Contact.gif" alt="contact" style="width:350px"/> |
 
 - Admin:
-  > | Manage Categories                                                                     | Manage Tags                                                                     |
-  > | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-  > | <img src="readme/devlog-gifs/06-adminCats.gif" alt="categories" style="width:350px"/> | <img src="readme/devlog-gifs/07-adminTags.gif" alt="tags" style="width:350px"/> |
+
+> | Manage Categories                                                                     | Manage Tags                                                                     |
+> | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/06-adminCats.gif" alt="categories" style="width:350px"/> | <img src="readme/devlog-gifs/07-adminTags.gif" alt="tags" style="width:350px"/> |
+
+> | Creating Blogs                                                                      | Updating Blogs                                                                   |
+> | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/08-adminCreate.gif" alt="create" style="width:350px"/> | <img src="readme/devlog-gifs/09-adminDel.gif" alt="uodate" style="width:350px"/> |
 
 <img src="./readme/title6.svg" id='install'/>
 
