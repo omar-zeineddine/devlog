@@ -90,6 +90,12 @@ A brief high-level overview of the tech stack used in the Devlog web app:
 > | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 > | <img src="readme/devlog-gifs/08-adminCreate.gif" alt="create" style="width:350px"/> | <img src="readme/devlog-gifs/09-adminDel.gif" alt="uodate" style="width:350px"/> |
 
+- User:
+
+> | Manage Blogs                                                                       | Update                                                                             | Manage Profile                                                                     |
+> | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/10-userCreate.gif" alt="create" style="width:350px"/> | <img src="readme/devlog-gifs/12-userUpdate.gif" alt="update" style="width:350px"/> | <img src="readme/devlog-gifs/11-profUpdate.gif" alt="create" style="width:350px"/> |
+
 <img src="./readme/title6.svg" id='install'/>
 
 > To get a local copy up and running follow these simple steps.
