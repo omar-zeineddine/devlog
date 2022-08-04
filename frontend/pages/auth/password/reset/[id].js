@@ -1,91 +1,70 @@
 import { useState } from "react";
 import Layout from "../../../../components/Layout";
 import { withRouter } from "next/router";
-import Link from "next/link";
 import { resetPass } from "../../../../actions/auth";
 
 const ResetPassword = ({ router }) => {
   const [values, setValues] = useState({
     name: "",
     newPassword: "",
-    message: "",
     error: "",
+    message: "",
+    showForm: true,
   });
 
-  const { name, newPassword, message, error } = values;
+  const { showForm, name, newPassword, error, message } = values;
 
-  const handleInputChange = (name) => (event) => {
-    setValues({
-      ...values,
-      error: "",
-      [name]: event.target.value,
-    });
-
-    // console.log(event.target.value);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setValues({ ...values, message: "", error: "" });
-    const data = await resetPass({
+    resetPass({
       newPassword,
       resetPasswordLink: router.query.id,
+    }).then((data) => {
+      if (data.error) {
+        setValues({
+          ...values,
+          error: data.error,
+          showForm: false,
+          newPassword: "",
+        });
+      } else {
+        setValues({
+          ...values,
+          message: data.message,
+          showForm: false,
+          newPassword: "",
+          error: false,
+        });
+      }
     });
-    if (data.error) {
-      setValues({
-        ...values,
-        error: data.error,
-        newPassword: "",
-      });
-    } else {
-      setValues({
-        ...values,
-        message: data.message,
-        error: false,
-      });
-    }
   };
 
-  const alertSuccess = () =>
-    message ? <div className="alert alert-success">{message}</div> : "";
-
-  const alertError = () =>
-    error ? (
-      <div className="alert alert-danger">
-        {error}{" "}
-        <Link href="/auth/password/forgot">
-          <a>Forgot Password?</a>
-        </Link>
-      </div>
-    ) : (
-      ""
-    );
-
-  return (
+  const passwordResetForm = () => (
     <Layout>
       <div className="container">
         <div className="row">
-          <div className="col-xl-6 col-md-8 mx-auto pt-5">
-            {alertSuccess()}
-            {alertError()}
-          </div>
+          <div className="col-xl-6 col-md-8 mx-auto pt-5"></div>
         </div>
         <div className="row">
           <div className="col-xl-6 col-md-8 mx-auto pt-5">
+            {showError()}
+            {showMessage()}
             <h3 className="text-center pb-3">Reset Password</h3>
             <p className="text-center pb-3">Please enter your new password.</p>
             <form onSubmit={handleSubmit}>
               <div className="form-group pt-3">
                 <input
                   type="password"
-                  onChange={handleInputChange("newPassword")}
                   className="form-control"
+                  onChange={(e) =>
+                    setValues({ ...values, newPassword: e.target.value })
+                  }
                   value={newPassword}
                   placeholder="Enter your new password"
                   required
                 />
               </div>
-              <div>
+              <div className="text-center">
                 <button type="submit" className="btn btn-primary">
                   Reset Password
                 </button>
@@ -96,6 +75,13 @@ const ResetPassword = ({ router }) => {
       </div>
     </Layout>
   );
+
+  const showError = () =>
+    error ? <div className="alert alert-danger">{error}</div> : "";
+  const showMessage = () =>
+    message ? <div className="alert alert-success">{message}</div> : "";
+
+  return <>{passwordResetForm()}</>;
 };
 
 export default withRouter(ResetPassword);

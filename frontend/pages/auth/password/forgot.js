@@ -54,13 +54,13 @@ const ForgotPassword = () => {
   return (
     <Layout>
       <div className="container">
-        <div className="col-lg-6 mx-auto pt-5">
+        <div className="col-lg-8 mx-auto pt-5">
           {alertSuccess()}
           {alertError()}
         </div>
-        <div className="col-lg-6 mx-auto pt-5">
+        <div className="col-lg-8 mx-auto pt-5">
           <h3 className="text-center pb-3">Forgot Password</h3>
-          <p className="mark text-center pb-3">
+          <p className="bg-gray text-center text-light p-1">
             Enter the email address you signed up with to receive the reset
             link.
           </p>
@@ -75,8 +75,8 @@ const ForgotPassword = () => {
                 required
               />
             </div>
-            <div>
-              <button type="submit" className="btn btn-primary btn-block">
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary mx-auto">
                 Request Password Reset
               </button>
             </div>
