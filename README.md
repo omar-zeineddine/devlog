@@ -66,13 +66,24 @@ A brief high-level overview of the tech stack used in the Devlog web app:
 
 > Using the above mentioned tech stack and the wireframes created with Figma, the implementation of the app is shown as below (animated gifs from the actual web app)
 
-> | Registration Validation                                                               | Account Activation                                                                         |
-> | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-> | <img src="readme/devlog-gifs/01-formValidation.gif" alt="login" style="width:350px"/> | <img src="readme/devlog-gifs/03-accountActivation.gif" alt="drawing" style="width:350px"/> |
+- Authentication & emails using AWS SES:
 
-> | Email confirmation                                                                       | Password Reset                                                                         |
-> | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/02-emailConfirmation.gif" alt="login" style="width:350px"/> | <img src="readme/devlog-gifs/04-passwordReset.gif" alt="drawing" style="width:350px"/> |
+> | Register Validation                                                                      | Account Activation                                                                          |
+> | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/01-formValidation.gif" alt="register" style="width:350px"/> | <img src="readme/devlog-gifs/03-accountActivation.gif" alt="activate" style="width:350px"/> |
+
+> | Email confirmation                                                                                    | Password Reset                                                                                |
+> | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/02-emailConfirmation.gif" alt="email-confirmation" style="width:350px"/> | <img src="readme/devlog-gifs/04-passwordReset.gif" alt="password-reset" style="width:350px"/> |
+
+> | Contact                                                                          |
+> | -------------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/05-Contact.gif" alt="contact" style="width:350px"/> |
+
+- Admin:
+  > | Manage Categories                                                                     | Manage Tags                                                                     |
+  > | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+  > | <img src="readme/devlog-gifs/06-adminCats.gif" alt="categories" style="width:350px"/> | <img src="readme/devlog-gifs/07-adminTags.gif" alt="tags" style="width:350px"/> |
 
 <img src="./readme/title6.svg" id='install'/>
 
