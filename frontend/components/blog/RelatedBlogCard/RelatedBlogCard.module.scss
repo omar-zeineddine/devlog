@@ -1,0 +1,34 @@
+.RelatedBlogCard {
+  background: white;
+
+  &Img {
+    // max-height: 50% !important;
+    // width: 100% !important;
+
+    width: 100% !important;
+    height: 10vw !important;
+    object-fit: cover !important;
+
+    // object-fit: cover;
+  }
+
+  &Title {
+    margin: 0;
+    padding: 1rem 0;
+    align-self: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--mainBlack);
+  }
+
+  &__Posted-by {
+    margin: 0;
+    padding: .5rem 0;
+    font-size: 1.6rem;
+    align-self: center;
+
+    span {
+      color: var(--primaryColor);
+    }
+  }
+} 

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { API } from "../../../config";
+import styles from "./RelatedBlogCard.module.scss";
 
 const RelatedBlogCard = ({ blog }) => {
   return (
-    <div className="container card my-3">
+    <div className={`${styles.RelatedBlogCard} container p-0 m-0 card my-3`}>
       <Link href={`/blogs/${blog.slug}`}>
         <a>
           <img
-            className="img fluid"
+            className={`${styles.RelatedBlogCardImg} `}
             src={`${API}/blog/photo/${blog.slug}`}
             alt={blog.title}
           />{" "}
