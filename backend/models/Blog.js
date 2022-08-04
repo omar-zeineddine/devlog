@@ -34,6 +34,9 @@ const BlogSchema = new mongoose.Schema(
     photo: {
       data: Buffer,
       contentType: String,
+      // aws s3
+      // url: String,
+      // key: String,
     },
     // array of categories --> points to category model
     categories: [{ type: ObjectId, ref: "Category", require: true }],

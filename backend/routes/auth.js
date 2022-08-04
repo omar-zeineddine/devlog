@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
-  registerAws,
+  // registerAws,
   initialSignup,
   signup,
   signin,
@@ -19,8 +19,6 @@ const {
   forgotPassValidator,
   resetPassValidator,
 } = require("../validators/auth");
-
-router.post("/test-ses", registerAws);
 
 router.post(
   "/initial-signup",
