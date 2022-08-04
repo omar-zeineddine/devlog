@@ -30,11 +30,11 @@ Reasons why developers should blog:
 > This design was planned before on paper, then moved to Figma app for the fine details.
 > Note that i didn't use any styling library or theme, all from scratch and using pure css modules
 
-| Signup                                               | Landing                                             |
-| ---------------------------------------------------- | --------------------------------------------------- |
-| <img src=https://i.imgur.com/fcjDoLg.png width=800 > | <img src=https://i.imgur.com/FoovuEm.png width=600> |
-| single blog                                          | Blog Editor                                         |
-| <img src=https://i.imgur.com/LuZxral.png>            | <img src=https://i.imgur.com/NSjK7EC.png>           |
+| Signup                                                                                                                         | Landing                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| <a href="https://ibb.co/qJHwGKy"><img src="https://i.ibb.co/qJHwGKy/Register.jpg" alt="Register" border="0" /></a>             | <a href="https://ibb.co/8rkTLhz"><img src="https://i.ibb.co/8rkTLhz/HOME.jpg" alt="HOME" border="0" /></a>             |
+| single blog                                                                                                                    | Blog Editor                                                                                                            |
+| <a href="https://ibb.co/St5J29F"><img src="https://i.ibb.co/St5J29F/SINGLE-ARTICLE.jpg" alt="SINGLE-ARTICLE" border="0" /></a> | <a href="https://ibb.co/7vJPYWK"><img src="https://i.ibb.co/7vJPYWK/Register-2.jpg" alt="Register-2" border="0" /></a> |
 
 <br><br>
 
