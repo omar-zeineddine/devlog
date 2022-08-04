@@ -130,6 +130,27 @@ A brief high-level overview of the tech stack used in the Devlog web app:
 
   ```
 
+- Connecting to MongoDB Atlas:
+  Create a free cluster and connect it to the project using the connection string
+
+  1. Create an account on [MongoDB Cloud Atlas](https://www.mongodb.com/cloud/atlas)
+  2. You will be prompted right away to create a new project and org. You may leave all values as default and click `Continue`.
+  3. Three cards will show up next asking you to choose a cluster. Select the `Shared Cluster` - that's the one which is free.
+  4. The next screen is about details of the cluster. Make sure M0 Cluster Tier is selected. You may leave all values as default and click on `Create Cluster`
+  5. Wait for a few seconds for the cluster to get ready and then click on `Connect`.
+  6. First thing you need to add is an IP Address. Select `Add your current IP Address` if you are working on the project yourself only or `Allow Access from Anywhere` for testing purposes.
+  7. Next up is Database user creation. You need to enter a username and password.
+  8. Next step asks you for a connection method. Select `Connect Your Application` and then copy the prompted connection string and click close.
+  9. go back to the `.env` file in the backend directory of the application and add a key value pair as follows:
+     `MONGO=<paste your connection string that you copied>`
+
+  The string looks like this: `mongodb+srv://admin:<password>@cluster0.bqss1.mongodb.net/<dbname>?retryWrites=true&w=majority`
+
+  In the connection string as shown above, you need to replace `<password>` with the password you had created in step 7 and `<dbname>` with a name that you would like to name your database.
+
+  So it would finally look like this for me (with username: admin, password: pass, dbname: todo)
+  `mongodb+srv://admin:pass@cluster0.bqss1.mongodb.net/todo?retryWrites=true&w=majority`
+
 ### Installation
 
 1. Clone the repo
