@@ -2,7 +2,7 @@ const User = require("../models/User");
 const Blog = require("../models/Blog");
 const formidable = require("formidable");
 const _ = require("lodash");
-const slugify = require("slugify");
+const fs = require("fs");
 const { errorHandler } = require("../utils/dbErrorHandler");
 
 exports.read = (req, res) => {
