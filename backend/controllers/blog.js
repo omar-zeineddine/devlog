@@ -413,7 +413,9 @@ exports.createBlog = (req, res) => {
     const { title, body } = fields;
     const { photo } = files;
 
-    let blog = new Blog({ title, body });
+    const slug = slugify(title);
+
+    let blog = new Blog({ title, body, slug });
 
     if (photo.size > 500000) {
       return res.status(400).json({
