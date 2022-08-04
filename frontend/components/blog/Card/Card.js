@@ -2,12 +2,12 @@ import Link from "next/link";
 import { API } from "../../../config";
 import renderHTML from "react-render-html";
 import moment from "moment";
+import styles from "./Card.module.scss";
 
 const Card = ({ blog }) => {
   return (
     <div className="lead blog">
       <header>
-        {/* use next link: clicking on blog title --> single blog view page */}
         <Link href={`/blogs/${blog.slug}`}>
           <a>
             <h2 className="py-3">{blog.title}</h2>
@@ -15,8 +15,7 @@ const Card = ({ blog }) => {
         </Link>
       </header>
       <section>
-        {/* <p className={`${style.markbg} `}> */}
-        <p className="mark ml-1 py-2">
+        <p className={`bg-gray d-inline-block `}>
           Written by{" "}
           <Link href={`/profile/${blog.postedBy.username}`}>
             <a>{blog.postedBy.name}</a>
@@ -24,8 +23,7 @@ const Card = ({ blog }) => {
           | Published {moment(blog.updatedAt).fromNow()}
         </p>
       </section>
-      <section>
-        {/* display categories and tags */}
+      <section className="py-4">
         {blog.categories.map((category) => (
           <Link key={category._id} href={`/categories/${category.slug}`}>
             <a className="btn btn-primary mr-2 mt-1">{category.name}</a>
@@ -53,10 +51,6 @@ const Card = ({ blog }) => {
           <section>
             <div>
               {renderHTML(blog.excerpt)}
-              {/* <div>{renderHTML(blog.excerpt)}</div> */}
-              {/* <Link href={`/blogs/${blog.slug}`}>
-                <a className="btn btn-primary  mt-3">Read More</a>
-              </Link> */}
               <Link href={`/blogs/${blog.slug}`}>
                 <div className="row justify-content-center">
                   <a type="submit" className="btn btn-primary">
