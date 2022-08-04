@@ -20,8 +20,8 @@ Reasons why developers should blog:
 
 - Teaching others will improve your skills and make you a better programmer
 - blog posts are a great medium for developers to learn and share their ideas
-- blogs are a way to staying up to date in the continuously evolving tech space
-- writing based around technical words isn't always easy task, blogging can improve a developers writing and communication skills
+- blogs are a way to stay up to date in the continuously evolving tech space
+- writing, based around technical words isn't always an easy task, blogging can improve a developers writing and communication skills
 
 <br><br>
 
@@ -42,20 +42,26 @@ Reasons why developers should blog:
 
 A brief high-level overview of the tech stack used in the Devlog web app:
 
-- Frontend: Devlog uses [React](https://reactjs.org), a javascript library for building user interfaces.
+- Frontend:
+
+  Devlog uses [React](https://reactjs.org), a javascript library for building user interfaces.
   The styling of individual components was done using [SASS](https://sass-lang.com/), a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).
 
   [Next.js](https://nextjs.org/) - for SSR (server-side rendering), statically generated pages.
 
   Next.js is an open source web development framework built on top of Node.js, it provides react based applications with functionalities such as server-side-rendering and generating static websites.
 
-- Backend: Devlog uses [Node.js](https://nodejs.org/en) and [Express](https://expressjs.com/).
+- Backend:
+
+  Devlog uses [Node.js](https://nodejs.org/en) and [Express](https://expressjs.com/).
 
   Node.js is an open-source, server-side, JavaScript runtime environment that is solely based on the V8 JavaScript Chrome Engine. Node.js can be used to create a variety of applications, including Command-Line Applications, Web Applications, Real-time Chat Applications, and REST API Servers.
 
   Express is a Node.js web application framework that provides broad features for building web and mobile applications. It is used to build a single page, multipage, and hybrid web application. It's a layer built on the top of the Node js that helps manage servers and routes.
 
 - For persistent storage, the app uses [MongoDB Atlas](https://www.mongodb.com/atlas/database). A Multi-Cloud Database Service offered by MongoDB that simplifies Database Deployment and Management while providing the flexibility required to build resilient and performant global applications on the Cloud providers of your choice.
+
+  Mongoose was used for Object Data Modeling (ODM), Mongoose is a Node.js-based Object Data Modeling (ODM) library for MongoDB.
 
 - Amazon Simple Email Service [SES](https://aws.amazon.com/ses/) is used to verify user emails on signup, account activation, and password reset requests.
 
