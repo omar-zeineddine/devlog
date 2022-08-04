@@ -70,7 +70,7 @@ const Header = () => {
                   <NavItem className={styles.navItem}>
                     <Link href="/signin">
                       <NavLink
-                        className={styles.navLink}
+                        className={styles.navLinkLo}
                         onClick={() => logout(() => Router.replace("/signin"))}
                       >
                         Logout
@@ -93,7 +93,9 @@ const Header = () => {
                 </>
               )}
             </Nav>
-            <Darkreader />
+            <NavItem className={styles.NavItem}>
+              <Darkreader />
+            </NavItem>
           </Collapse>
         </div>
       </Navbar>
