@@ -30,9 +30,12 @@ Reasons why developers should blog:
 > This design was planned before on paper, then moved to Figma app for the fine details.
 > Note that i didn't use any styling library or theme, all from scratch and using pure css modules
 
-| Signup                                               | Landing                                             |
-| ---------------------------------------------------- | --------------------------------------------------- |
-| <img src=https://i.imgur.com/fcjDoLg.png width=800 > | <img src=https://i.imgur.com/FoovuEm.png width=600> |
+| Signup                                                 | Landing                                               |
+| ------------------------------------------------------ | ----------------------------------------------------- |
+| <img src=https://i.imgur.com/fcjDoLg.png width=800 >   | <img src=https://i.imgur.com/FoovuEm.png width=600>   |
+| single blog                                            |                                                       |
+| ------------------------------------------------------ | ----------------------------------------------------- |
+| <img src=https://i.imgur.com/LuZxral.png>              |
 
 <br><br>
 
