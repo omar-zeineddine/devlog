@@ -68,33 +68,43 @@ A brief high-level overview of the tech stack used in the Devlog web app:
 
 - Authentication & emails using AWS SES:
 
-> | Register Validation                                                                      | Account Activation                                                                          |
-> | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/01-formValidation.gif" alt="register" style="width:350px"/> | <img src="readme/devlog-gifs/03-accountActivation.gif" alt="activate" style="width:350px"/> |
+> | Register Validation                                                       | Account Activation                                                           |
+> | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/01-formValidation.gif" style="width:350px"/> | <img src="readme/devlog-gifs/03-accountActivation.gif" style="width:350px"/> |
 
-> | Email confirmation                                                                                    | Password Reset                                                                                |
-> | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/02-emailConfirmation.gif" alt="email-confirmation" style="width:350px"/> | <img src="readme/devlog-gifs/04-passwordReset.gif" alt="password-reset" style="width:350px"/> |
+> | Email confirmation                                                           | Password Reset                                                           |
+> | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+> | <img src="readme/devlog-gifs/02-emailConfirmation.gif" style="width:350px"/> | <img src="readme/devlog-gifs/04-passwordReset.gif" style="width:350px"/> |
 
-> | Contact                                                                          |
-> | -------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/05-Contact.gif" alt="contact" style="width:350px"/> |
+> | Contact                                                            |
+> | ------------------------------------------------------------------ |
+> | <img src="readme/devlog-gifs/05-Contact.gif" style="width:350px"/> |
 
 - Admin:
 
-> | Manage Categories                                                                     | Manage Tags                                                                     |
-> | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/06-adminCats.gif" alt="categories" style="width:350px"/> | <img src="readme/devlog-gifs/07-adminTags.gif" alt="tags" style="width:350px"/> |
+> | Manage Categories                                                    | Manage Tags                                                          |
+> | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/06-adminCats.gif" style="width:350px"/> | <img src="readme/devlog-gifs/07-adminTags.gif" style="width:350px"/> |
 
-> | Creating Blogs                                                                      | Updating Blogs                                                                   |
-> | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/08-adminCreate.gif" alt="create" style="width:350px"/> | <img src="readme/devlog-gifs/09-adminDel.gif" alt="uodate" style="width:350px"/> |
+> | Creating Blogs                                                         | Updating Blogs                                                      |
+> | ---------------------------------------------------------------------- | ------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/08-adminCreate.gif" style="width:350px"/> | <img src="readme/devlog-gifs/09-adminDel.gif" style="width:350px"/> |
 
 - User:
 
-> | Manage Blogs                                                                       | Update                                                                             | Manage Profile                                                                     |
-> | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-> | <img src="readme/devlog-gifs/10-userCreate.gif" alt="create" style="width:350px"/> | <img src="readme/devlog-gifs/12-userUpdate.gif" alt="update" style="width:350px"/> | <img src="readme/devlog-gifs/11-profUpdate.gif" alt="create" style="width:350px"/> |
+> | Manage Blogs                                                          | Update                                                                | Manage Profile                                                         |
+> | --------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/10-userCreate.gif" style="width:350px"/> | <img src="readme/devlog-gifs/12-userUpdate.gif" style="width:350px"/> | <img src="readme/devlog-gifs/11-profUpdate.gif"  style="width:350px"/> |
+
+- Extra features:
+
+> | Disqus commenting system (linked to socials)                      | Blog Filtering (based on different criteria)                       | Infinite scroll on Blogs page                                      |
+> | ----------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+> | <img src="readme/devlog-gifs/13-disqus.gif" style="width:350px"/> | <img src="readme/devlog-gifs/14-filters.gif" style="width:350px"/> | <img src="readme/devlog-gifs/15-scroll.gif"  style="width:350px"/> |
+
+> | Dark Mode                                                     | Light Mode                                                    | Dark Mode Toggler                                                   |
+> | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------- |
+> | <img src="readme/devlog-gifs/16-dm.png" style="width:350px"/> | <img src="readme/devlog-gifs/17-lm.png" style="width:350px"/> | <img src="readme/devlog-gifs/18-toggler.gif"  style="width:350px"/> |
 
 <img src="./readme/title6.svg" id='install'/>
 
