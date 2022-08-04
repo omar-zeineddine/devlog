@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="container">
+    <footer>
       <hr />
       <p className="text-center font-weight-bold">
         Devlog© - {new Date().getFullYear()}

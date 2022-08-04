@@ -7,6 +7,7 @@ import renderHTML from "react-render-html";
 import moment from "moment";
 import RelatedBlogCard from "../../components/blog/RelatedBlogCard/RelatedBlogCard";
 import DisqusThread from "../../components/comment/DisqusThread";
+import Footer from "../../components/Footer/Footer";
 
 const BlogPage = ({ blog, query }) => {
   // states
@@ -105,6 +106,7 @@ const BlogPage = ({ blog, query }) => {
             path={`/blog/${blog.slug}`}
           />
         </div>
+        <Footer />
       </Layout>
     </>
   );
