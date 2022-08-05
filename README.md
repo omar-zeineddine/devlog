@@ -12,9 +12,7 @@
 
 <img src="./readme/title2.svg" id='philosophy'/>
 
-> Developers spend a lot of time trying to achieve a goal, fixing a bug, or refactoring code
-
-> The idea behind Devlog is to be the go to place for devs, a place where they can write down their thoughts, or document their latest ideas around a community that share their same interests
+> Developers spend a lot of time trying to achieve a goal, fixing a bug, or refactoring code. The idea behind Devlog is to be the go to place for devs, a place where they can write down their thoughts, or document their latest ideas around a community that share their same interests.
 
 Reasons why developers should blog:
 
@@ -22,6 +20,20 @@ Reasons why developers should blog:
 - blog posts are a great medium for developers to learn and share their ideas
 - blogs are a way to stay up to date in the continuously evolving tech space
 - writing, based around technical words isn't always an easy task, blogging can improve a developers writing and communication skills
+
+#### Admin user stories
+
+- As an admin, I can manage the site categories and tags
+- As an admin, I can manage all the blog posts of all the site users
+
+#### Regular user stories
+
+- As a user, I can create my own blog post in a rich text editor with ability to add link different media types
+  \_ As a user, I can find content related to my blog posts
+- As a user, I can check other user's accounts and contact them through their emails
+- As a user, I can comment publicly by linking on of my social media accounts
+- As a user, I can update my profile info and login password
+- As a user, I can request a secure password reset in case I forgot my password
 
 <br><br>
 
